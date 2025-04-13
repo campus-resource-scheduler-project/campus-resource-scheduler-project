@@ -3,8 +3,8 @@ import { Button, Col, Row } from 'react-bootstrap';
 
 /** The Home page. */
 const Home = () => (
-  <main>
-    <Row className="justify-content-center align-items-center" style={{ height: '100vh', width: '100vw' }}>
+  <main style={{ overflow: 'hidden' }}>
+    <Row className="justify-content-center align-items-center" style={{ height: '100vh' }}>
       <Col className="text-center">
         <h1 style={{ color: 'black' }}>
           Welcome to
@@ -13,12 +13,12 @@ const Home = () => (
         </h1>
         <Row className="justify-content-center align-items-center">
           <Col className="text-center col-auto mx-5">
-            <Button size="lg" className="landing-buttons mt-2 rounded-0" href="/" style={{ backgroundColor: '#363636;', border: 'none' }}>
+            <Button size="lg" id="landing-button" className="mt-2 rounded-0" href="/" style={{ backgroundColor: '#363636', border: 'none' }}>
               <b>Borrow Equipment</b>
             </Button>
           </Col>
           <Col className="text-center col-auto mx-5">
-            <Button size="lg" className="landing-buttons mt-2 rounded-0" href="/" style={{ backgroundColor: '#363636;', border: 'none' }}>
+            <Button size="lg" id="landing-button" className="mt-2 rounded-0" href="/" style={{ backgroundColor: '#363636', border: 'none' }}>
               <b>Borrow Rooms</b>
             </Button>
           </Col>
@@ -33,7 +33,7 @@ const Home = () => (
               AI to help you find what you need.
             </h1>
             <Col className="text-center">
-              <Button size="lg" className="mt-2 rounded-0" href="/" style={{ backgroundColor: '#363636;', border: 'none' }}>
+              <Button size="lg" id="landing-button" className="mt-2 rounded-0" href="/" style={{ backgroundColor: '#363636', border: 'none' }}>
                 <b>LoanLink</b>
               </Button>
             </Col>
@@ -41,7 +41,6 @@ const Home = () => (
         </Row>
       </Col>
     </Row>
-
   </main>
 );
 

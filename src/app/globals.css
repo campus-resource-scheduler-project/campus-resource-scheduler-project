@@ -3,9 +3,70 @@ body {
     --bs-dark: var(var(--nat-navbar-bg));
     --bs-dark-rgb: var(--nat-navbar-bg-rgb);
     box-sizing: border-box;
-    width: 100vw;
+    width: 100%;
     background: fixed center url('/hamilton-library-bg.png');
     background-size: cover;
+}
+
+#landing-button{
+  width: 275px !important;
+}
+
+#landing-button:hover{
+  background-color: #907139 !important;
+}
+
+#navbar-options .nav-link{
+  color: white !important;
+  font-weight: bold !important;
+  padding-right: 50px !important;
+}
+
+#navbar-options .nav-link:hover{
+  color: #907139 !important;
+}
+
+#login-dropdown{
+  color: white !important;
+  font-weight: bold !important;
+  border-radius: 0 !important;
+  width: 150px !important;
+  height: 50px !important;
+}
+
+#logged-in{
+  color: white !important;
+  font-weight: bold !important;
+  border-radius: 0 !important;
+  width: 150px !important;
+  height: 50px !important;
+  font-size: 14px !important;
+}
+
+#login-dropdown::after, #logged-in::after{
+  display: none !important;
+}
+
+#login-dropdown:hover, #logged-in:hover{
+  background-color: #907139 !important;
+}
+
+#login-dropdown:focus, #logged-in:focus{
+  border: 0 !important;
+  background-color: #907139 !important;
+}
+
+#footer-links {
+  color: white !important;
+  text-decoration: none !important;
+}
+
+#footer-links:hover {
+  color: #907139 !important;
+}
+
+#footer-divs {
+  padding-left: 50px !important;
 }
 
 .wrapper {
