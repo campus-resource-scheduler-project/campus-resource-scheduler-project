@@ -1,20 +1,47 @@
-import { Col, Container, Image, Row } from 'react-bootstrap';
+/* eslint-disable max-len */
+import { Button, Col, Row } from 'react-bootstrap';
 
 /** The Home page. */
 const Home = () => (
   <main>
-    <Container id="landing-page" fluid className="py-3">
-      <Row className="align-middle text-center">
-        <Col xs={4}>
-          <Image src="next.svg" width="150px" alt="" />
-        </Col>
+    <Row className="justify-content-center align-items-center" style={{ height: '100vh', width: '100vw' }}>
+      <Col className="text-center">
+        <h1 style={{ color: 'black' }}>
+          Welcome to
+          {' '}
+          <b>Campus Resource Scheduler!</b>
+        </h1>
+        <Row className="justify-content-center align-items-center">
+          <Col className="text-center col-auto mx-5">
+            <Button size="lg" className="landing-buttons mt-2 rounded-0" href="/" style={{ backgroundColor: '#363636;', border: 'none' }}>
+              <b>Borrow Equipment</b>
+            </Button>
+          </Col>
+          <Col className="text-center col-auto mx-5">
+            <Button size="lg" className="landing-buttons mt-2 rounded-0" href="/" style={{ backgroundColor: '#363636;', border: 'none' }}>
+              <b>Borrow Rooms</b>
+            </Button>
+          </Col>
+        </Row>
+        <Row className="justify-content-center align-items-center">
+          <Col className="mt-5 text-center">
+            <h1 style={{ color: 'black', fontSize: '24px' }}>
+              or try our
+              {' '}
+              <b>LoanLink</b>
+              {' '}
+              AI to help you find what you need.
+            </h1>
+            <Col className="text-center">
+              <Button size="lg" className="mt-2 rounded-0" href="/" style={{ backgroundColor: '#363636;', border: 'none' }}>
+                <b>LoanLink</b>
+              </Button>
+            </Col>
+          </Col>
+        </Row>
+      </Col>
+    </Row>
 
-        <Col xs={8} className="d-flex flex-column justify-content-center">
-          <h1>Welcome to this template</h1>
-          <p>Now get to work and modify this app!</p>
-        </Col>
-      </Row>
-    </Container>
   </main>
 );
 

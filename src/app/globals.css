@@ -1,11 +1,13 @@
 html,
 body {
-  --bs-light-rgb: 236, 236, 236;
-  box-sizing: border-box;
-  height: 100%;
-  padding: 0;
-  margin: 0;
+    --bs-dark: var(var(--nat-navbar-bg));
+    --bs-dark-rgb: var(--nat-navbar-bg-rgb);
+    box-sizing: border-box;
+    width: 100vw;
+    background: fixed center url('/hamilton-library-bg.png');
+    background-size: cover;
 }
+
 .wrapper {
   box-sizing: border-box;
   min-height: 100%;
