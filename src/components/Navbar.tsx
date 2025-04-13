@@ -1,10 +1,11 @@
+/* eslint-disable max-len */
 /* eslint-disable react/jsx-indent, @typescript-eslint/indent */
 
 'use client';
 
 import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
-import { Container, Nav, Navbar, NavDropdown, Image } from 'react-bootstrap';
+import { Container, Nav, Navbar, NavDropdown, Image, DropdownButton } from 'react-bootstrap';
 import { BoxArrowRight, Lock, PersonFill, PersonPlusFill } from 'react-bootstrap-icons';
 
 const NavBar: React.FC = () => {
@@ -26,19 +27,26 @@ const NavBar: React.FC = () => {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto justify-content-start">
+          <Nav id="navbar-options" className="ms-auto justify-content-end align-items-center">
             {currentUser
               ? [
-                  <Nav.Link id="add-stuff-nav" href="/add" key="add" active={pathName === '/add'}>
-                    Add Stuff
+                  <Nav.Link id="add-stuff-nav" href="/" key="equipment" active={pathName === '/'}>
+                    Equipment
                   </Nav.Link>,
-                  <Nav.Link id="list-stuff-nav" href="/list" key="list" active={pathName === '/list'}>
-                    List Stuff
+                  <Nav.Link id="list-stuff-nav" href="/" key="rooms" active={pathName === '/'}>
+                    Rooms
                   </Nav.Link>,
+                  <Nav.Link id="list-stuff-nav" href="/" key="your" active={pathName === '/'}>
+                    Your Resources
+                  </Nav.Link>,
+                  <Nav.Link id="list-stuff-nav" href="/" key="loanlink" active={pathName === '/'}>
+                    LoanLink
+                  </Nav.Link>,
+
                 ]
               : ''}
             {currentUser && role === 'ADMIN' ? (
-              <Nav.Link id="admin-stuff-nav" href="/admin" key="admin" active={pathName === '/admin'}>
+              <Nav.Link id="admin-stuff-nav" href="/" key="admin" active={pathName === '/'}>
                 Admin
               </Nav.Link>
             ) : (
@@ -47,7 +55,7 @@ const NavBar: React.FC = () => {
           </Nav>
           <Nav>
             {session ? (
-              <NavDropdown id="login-dropdown" title={currentUser}>
+            <DropdownButton id="logged-in" title={currentUser} size="lg" className="mt-2 rounded-0" variant="none" style={{ backgroundColor: '#363636', border: 'none' }}>
                 <NavDropdown.Item id="login-dropdown-sign-out" href="/api/auth/signout">
                   <BoxArrowRight />
                   Sign Out
@@ -56,9 +64,9 @@ const NavBar: React.FC = () => {
                   <Lock />
                   Change Password
                 </NavDropdown.Item>
-              </NavDropdown>
+            </DropdownButton>
             ) : (
-              <NavDropdown id="login-dropdown" title="Login">
+            <DropdownButton size="lg" className="mt-2 rounded-0" variant="none" style={{ backgroundColor: '#363636', border: 'none' }} title="Login" id="login-dropdown">
                 <NavDropdown.Item id="login-dropdown-sign-in" href="/auth/signin">
                   <PersonFill />
                   Sign in
@@ -67,7 +75,7 @@ const NavBar: React.FC = () => {
                   <PersonPlusFill />
                   Sign up
                 </NavDropdown.Item>
-              </NavDropdown>
+            </DropdownButton>
             )}
           </Nav>
         </Navbar.Collapse>
