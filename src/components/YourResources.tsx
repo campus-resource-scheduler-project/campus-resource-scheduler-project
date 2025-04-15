@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation';
 import LoadingSpinner from './LoadingSpinner';
 
 const YourResources: React.FC = () => {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
 
   if (status === 'loading') {
     return <LoadingSpinner />;
