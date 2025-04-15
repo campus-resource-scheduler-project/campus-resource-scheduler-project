@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Campus Resource Scheduler',
-  description: 'A web application to help students schedule their classes and resources',
+  description: 'A web application to help students borrow common resources and rooms for use.',
 };
 
 export default function RootLayout({
