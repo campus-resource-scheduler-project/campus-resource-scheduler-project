@@ -1,21 +1,3 @@
-<img src="doc/vercel.png">
-
-## Deployment with Vercel
-
-To make Campus Resource Scheduler easily accessible to the UH Mānoa community, we’ve deployed our application using Vercel, a powerful platform for frontend frameworks and static sites. Vercel streamlines the deployment process, offering continuous integration with GitHub and automatic updates every time changes are pushed to the main branch.
-
-With Vercel, our team is able to:
-- Deploy new features quickly with minimal setup
-- Preview changes via deployment previews
-- Scale efficiently to accommodate traffic from students and administrators
-
-## Live Website
-
-You can access the deployed Campus Resource Scheduler here:
-- https://campus-resource-scheduler-project.vercel.app/
-
-Feel free to explore the features we’ve implemented, from equipment and room scheduling to AI-powered recommendations. This platform aims to improve how UH Mānoa students discover and access the campus resources they need.
-
 nextjs-application-template is a sample Next.js 14 application that illustrates:
 
 - A standard directory layout using 'src/' as recommended in the [Next.js Project Structure](https://nextjs.org/docs/getting-started/project-structure) guide.
