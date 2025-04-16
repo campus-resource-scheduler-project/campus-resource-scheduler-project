@@ -14,7 +14,7 @@ datasource db {
   // url      = env("DATABASE_URL")
   // for Vercel
   url       = env("POSTGRES_PRISMA_URL")
-  directUrl = env("POSTGRES_URL_NON_POOLING")
+  directUrl = env("POSTGRES_URL")
 }
 
 enum Role {
