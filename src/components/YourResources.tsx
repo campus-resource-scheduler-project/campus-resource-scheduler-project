@@ -1,9 +1,19 @@
+'use client';
+
 import React from 'react';
-import { Container, Row, Col, Card } from 'react-bootstrap';
+import { Container, Row, Col, Card, Spinner } from 'react-bootstrap';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
-import LoadingSpinner from './LoadingSpinner';
+
+// Loading component for use within the client component
+const LoadingSpinner = () => (
+  <div className="d-flex justify-content-center my-5">
+    <Spinner animation="border" role="status">
+      <span className="visually-hidden">Loading...</span>
+    </Spinner>
+  </div>
+);
 
 const YourResources: React.FC = () => {
   const { status } = useSession();
@@ -16,8 +26,8 @@ const YourResources: React.FC = () => {
     redirect('/auth/signin');
   }
 
-  // Mock data to display the resources based on the provided image
-  const resourcesData = [
+  // Resources data
+  const resources = [
     {
       id: 1,
       name: 'Lab Goggles',
@@ -71,7 +81,7 @@ const YourResources: React.FC = () => {
       <div className="mb-2">Borrowing</div>
 
       <Row className="g-3">
-        {resourcesData.map((resource) => (
+        {resources.map((resource) => (
           <Col key={resource.id} xs={12} sm={6} md={4} lg={3} xl={2}>
             <Card className="h-100 border-0">
               {/* Resource Image - Light gray background placeholder */}
