@@ -4,7 +4,7 @@ import React from 'react';
 import { Container, Row, Col, Card, Spinner } from 'react-bootstrap';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
-import { redirect } from 'next/navigation';
+// import { redirect } from 'next/navigation';
 
 // Loading component for use within the client component
 const LoadingSpinner = () => (
@@ -22,9 +22,9 @@ const YourResources: React.FC = () => {
     return <LoadingSpinner />;
   }
 
-  if (status === 'unauthenticated') {
-    redirect('/auth/signin');
-  }
+  // if (status === 'unauthenticated') {
+  //   redirect('/auth/signin');
+  // }
 
   // Resources data
   const resources = [
@@ -34,6 +34,7 @@ const YourResources: React.FC = () => {
       campus: 'Main Campus',
       postedBy: 'Workplace CC',
       postedOn: '04/16/2025, 9:00 AM',
+      location: 'Location',
       returnDeadline: 'Return Deadline',
       imageUrl: '/images/lab-goggles.jpg',
     },
@@ -43,6 +44,7 @@ const YourResources: React.FC = () => {
       campus: 'Campus',
       postedBy: 'Posted by',
       postedOn: 'Posted on',
+      location: 'Location',
       returnDeadline: 'Return Deadline',
       imageUrl: '/images/default-resource.jpg',
     },
@@ -52,6 +54,7 @@ const YourResources: React.FC = () => {
       campus: 'Campus',
       postedBy: 'Posted by',
       postedOn: 'Posted on',
+      location: 'Location',
       returnDeadline: 'Return Deadline',
       imageUrl: '/images/default-resource.jpg',
     },
@@ -61,6 +64,7 @@ const YourResources: React.FC = () => {
       campus: 'Campus',
       postedBy: 'Posted by',
       postedOn: 'Posted on',
+      location: 'Location',
       returnDeadline: 'Return Deadline',
       imageUrl: '/images/default-resource.jpg',
     },
@@ -70,6 +74,7 @@ const YourResources: React.FC = () => {
       campus: 'Campus',
       postedBy: 'Posted by',
       postedOn: 'Posted on',
+      location: 'Location',
       returnDeadline: 'Return Deadline',
       imageUrl: '/images/default-resource.jpg',
     },
@@ -78,8 +83,6 @@ const YourResources: React.FC = () => {
   return (
     <Container className="py-3">
       <h2>Your Resources</h2>
-      <div className="mb-2">Borrowing</div>
-
       <Row className="g-3">
         {resources.map((resource) => (
           <Col key={resource.id} xs={12} sm={6} md={4} lg={3} xl={2}>
@@ -106,7 +109,10 @@ const YourResources: React.FC = () => {
                     <span>{resource.campus}</span>
                     <span>{resource.postedBy}</span>
                   </div>
-                  <div>{resource.postedOn}</div>
+                  <div className="d-flex justify-content-between">
+                    <span>{resource.postedOn}</span>
+                    <span>{resource.location}</span>
+                  </div>
                 </div>
               </div>
 
