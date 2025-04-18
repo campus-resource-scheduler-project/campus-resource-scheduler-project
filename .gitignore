@@ -48,6 +48,3 @@ settings.production.json
 /playwright-report/
 /blob-report/
 /playwright/.cache/
-
-prisma/migrations/
-prisma/schema.prisma
