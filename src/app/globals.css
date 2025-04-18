@@ -1,5 +1,8 @@
 html,
-body {
+main{
+  height: 100%;
+}
+#hasBG {
     --bs-dark: var(var(--nat-navbar-bg));
     --bs-dark-rgb: var(--nat-navbar-bg-rgb);
     box-sizing: border-box;
