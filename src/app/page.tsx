@@ -3,7 +3,7 @@ import { Button, Col, Row } from 'react-bootstrap';
 
 /** The Home page. */
 const Home = () => (
-  <main style={{ overflow: 'hidden' }}>
+  <main id="hasBG" style={{ overflow: 'hidden' }}>
     <Row className="justify-content-center align-items-center" style={{ height: '100vh' }}>
       <Col className="text-center">
         <h1 style={{ color: 'black' }}>
