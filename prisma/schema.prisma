@@ -42,4 +42,7 @@ model Stuff {
   quantity  Int
   condition Condition @default(good)
   owner     String
+  isAvailable Boolean @default(true)
+  averageRating Float
+  category  String
 }

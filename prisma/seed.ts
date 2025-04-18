@@ -33,6 +33,9 @@ async function main() {
         quantity: data.quantity,
         owner: data.owner,
         condition,
+        isAvailable: true,
+        averageRating: 4.0,
+        category: 'equipment',
       },
     });
   }
