@@ -6,7 +6,7 @@
 import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 import { Container, Nav, Navbar, NavDropdown, Image, DropdownButton } from 'react-bootstrap';
-import { BoxArrowRight, Lock, PersonFill, PersonPlusFill } from 'react-bootstrap-icons';
+import { BoxArrowRight, Lock, Person, PersonFill, PersonPlusFill } from 'react-bootstrap-icons';
 
 const NavBar: React.FC = () => {
   const { data: session } = useSession();
@@ -56,6 +56,10 @@ const NavBar: React.FC = () => {
           <Nav>
             {session ? (
             <DropdownButton id="logged-in" title={currentUser} size="lg" className="mt-2 rounded-0" variant="none" style={{ backgroundColor: '#363636', border: 'none' }}>
+                <NavDropdown.Item id="login-dropdown-sign-out" href="/profile">
+                <Person />
+                  Profile
+                </NavDropdown.Item>
                 <NavDropdown.Item id="login-dropdown-sign-out" href="/api/auth/signout">
                   <BoxArrowRight />
                   Sign Out
