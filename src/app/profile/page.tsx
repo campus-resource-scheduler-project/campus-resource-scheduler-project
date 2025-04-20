@@ -9,7 +9,7 @@ export default function ProfilePage() {
         <h2><b>Your Profile</b></h2>
         <Col style={{ float: 'left', width: '60%', height: '100vh' }}>
           <Row id="profile-box" className="d-flex flex-column" style={{ height: '35%' }}>
-            <Image className="" src="/genericdude.png.webp" style={{ padding: 0, width: '225px', height: '225px' }} />
+            <Image className="" src="/genericdude.png.webp" style={{ padding: 0, width: 'auto', height: '100%' }} />
             <h3 className=""><b>John Foo</b></h3>
             <h5 className="">Computer Science Major</h5>
             <br />
