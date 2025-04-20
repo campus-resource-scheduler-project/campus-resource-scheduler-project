@@ -1,7 +1,7 @@
 {
   "defaultAccounts": [
-    { "email": "admin@foo.com", "password": "changeme", "role": "ADMIN" },
-    { "email": "john@foo.com", "password": "changeme" }
+    { "email": "admin@foo.com", "password": "changeme", "role": "ADMIN", "name": "Admin", "occupation":"Admin", "bio": "default", "major": "N/A", "standing": "N/A", "campus": "University of Hawaii at Manoa", "phone": "(808) 123-4321", "personal": "admin@gmail.com", "image": "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da847df5b05db6f8ca5698f13cbc" },
+    { "email": "john@foo.com", "password": "changeme",  "name": "John Foo", "occupation": "Student", "bio": "CS Major at WCC. I am unemployed. I need resources n stuff.", "major": "Computer Science", "standing": "Junior", "campus": "Windward Community College", "phone": "(808) 432-1234", "personal": "johnfoo@gmail.com", "image": "https://freepngimg.com/thumb/man/22654-6-man-thumb.png" }
   ],
 
   "defaultData": [

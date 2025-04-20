@@ -17,6 +17,15 @@ async function main() {
         email: account.email,
         password,
         role,
+        name: account.name,
+        image: account.image,
+        occupation: account.occupation,
+        bio: account.bio,
+        phone: account.phone,
+        major: account.major,
+        standing: account.standing,
+        campus: account.campus,
+        personal: account.personal,
       },
     });
     // console.log(`  Created user: ${user.email} with role: ${user.role}`);

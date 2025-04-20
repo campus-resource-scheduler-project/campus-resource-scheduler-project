@@ -1,32 +1,58 @@
 /* eslint-disable max-len */
-import { Col, Container, Row, Image } from 'react-bootstrap';
+import { Col, Container, Row, Image, Button } from 'react-bootstrap';
 import { PencilSquare, Instagram, Linkedin, Facebook, Github, TwitterX, Globe } from 'react-bootstrap-icons';
+import { getServerSession } from 'next-auth';
+import authOptions from '@/lib/authOptions';
+import { loggedInProtectedPage } from '@/lib/page-protection';
+import { prisma } from '@/lib/prisma';
 
-export default function ProfilePage() {
+export default async function ProfilePage() {
+  const session = await getServerSession(authOptions);
+  loggedInProtectedPage(
+    session as { user: { email: string; id: string; randomKey: string }; }
+    | null,
+  );
+  const owner = (session && session.user && session.user.email) || '';
+  const user = await prisma.user.findUnique({
+    where: { email: owner },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      image: true,
+      occupation: true,
+      bio: true,
+      phone: true,
+      major: true,
+      standing: true,
+      campus: true,
+      personal: true,
+    },
+  });
   return (
     <main id="hasBG" style={{ display: 'flex', flexDirection: 'row', height: '100%', overflow: 'hidden' }}>
       <Container className="py-3">
         <h2><b>Your Profile</b></h2>
         <Col style={{ float: 'left', width: '60%', height: '100vh' }}>
           <Row id="profile-box" className="d-flex flex-column" style={{ height: '35%' }}>
-            <Image className="" src="/genericdude.png.webp" style={{ padding: 0, width: 'auto', height: '100%' }} />
-            <h3 className=""><b>John Foo</b></h3>
-            <h5 className="">Computer Science Major</h5>
+            <Image className="" src={user?.image} style={{ padding: 0, width: 'auto', height: '100%' }} />
+            <h3 className=""><b>{user?.name}</b></h3>
+            <h5 className="">{user?.occupation}</h5>
             <br />
             <h6 className="">
               <b>Email Address:</b>
               {' '}
-              john@foo.com
+              {user?.email}
             </h6>
             <h6 className="">
               <b>Phone Number:</b>
               {' '}
-              (808) 432-1234
+              {user?.phone}
             </h6>
             <h6 className="">
               <b>Standing:</b>
               {' '}
-              Junior
+              {user?.standing}
             </h6>
             <h6>
               <Instagram id="account-icons" />
@@ -45,12 +71,10 @@ export default function ProfilePage() {
           <Row id="profile-box" className="" style={{ backgroundColor: 'white', height: '100vh' }}>
             <h4>
               <b>BIO</b>
-              <PencilSquare style={{ float: 'right' }} />
+              <Button variant="none" href={`edit/${user?.id}`} style={{ color: '#363636', float: 'right', padding: 'none' }}><PencilSquare style={{ height: '20px', width: 'auto' }} /></Button>
             </h4>
             <Container>
-              <h6>CS Major at WCC.</h6>
-              <h6> I am unemployed.</h6>
-              <h6> I need resources n stuff.</h6>
+              <h6>{user?.bio}</h6>
             </Container>
             <hr />
             <h4><b>Other Information</b></h4>
@@ -58,27 +82,27 @@ export default function ProfilePage() {
               <h6>
                 <b>Major:</b>
                 {' '}
-                Computer Science
+                {user?.major}
               </h6>
               <h6>
                 <b>Standing:</b>
                 {' '}
-                Junior
+                {user?.standing}
               </h6>
               <h6>
                 <b>Campus:</b>
                 {' '}
-                Windward Community College
+                {user?.campus}
               </h6>
               <h6>
                 <b>Phone Number:</b>
                 {' '}
-                (808) 432-1234
+                {user?.phone}
               </h6>
               <h6>
                 <b>Personal Email:</b>
                 {' '}
-                johnfoo@gmail.com
+                {user?.personal}
               </h6>
 
             </Container>

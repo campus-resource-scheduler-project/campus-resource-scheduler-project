@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+
 'use server';
 
 import { Stuff, Condition } from '@prisma/client';
@@ -67,15 +69,49 @@ export async function deleteStuff(id: number) {
  * Creates a new user in the database.
  * @param credentials, an object with the following properties: email, password.
  */
-export async function createUser(credentials: { email: string; password: string }) {
+export async function createUser(credentials: { email: string; password: string; name: string; image: string; occupation: string; bio: string; phone: string; major: string; standing: string; campus: string; personal: string }) {
   // console.log(`createUser data: ${JSON.stringify(credentials, null, 2)}`);
   const password = await hash(credentials.password, 10);
   await prisma.user.create({
     data: {
       email: credentials.email,
       password,
+      role: 'USER',
+      name: credentials.name,
+      image: credentials.image,
+      occupation: credentials.occupation,
+      bio: credentials.bio,
+      phone: credentials.phone,
+      major: credentials.major,
+      standing: credentials.standing,
+      campus: credentials.campus,
+      personal: credentials.personal,
     },
   });
+}
+
+export async function editUser(user: {
+  id: number;
+  bio: string;
+  phone: string;
+  major: string;
+  standing: string;
+  campus: string;
+  personal: string;
+}) {
+  await prisma.user.update({
+    where: { id: user.id },
+    data: {
+      id: user.id,
+      bio: user.bio,
+      phone: user.phone,
+      major: user.major,
+      standing: user.standing,
+      campus: user.campus,
+      personal: user.personal,
+    },
+  });
+  redirect('/profile');
 }
 
 /**
