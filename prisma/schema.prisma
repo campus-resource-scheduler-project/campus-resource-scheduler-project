@@ -54,14 +54,14 @@ model Stuff {
 }
 
 model Resource {
-  id        Int
-  name      String
-  category  String
-  type      String
-  owner     String
-  location  String
-  campus    String
-  image     String
-  posted    String
-  deadline  String
+  id        Int       @id @default(autoincrement())
+  name      String  @default("")
+  category  String  @default("")
+  type      String  @default("")
+  owner     String  @default("")
+  location  String  @default("")
+  campus    String  @default("")
+  image     String  @default("")
+  posted    String  @default("")
+  deadline  String  @default("")
 }
