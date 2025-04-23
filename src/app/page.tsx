@@ -9,23 +9,29 @@ const Home = () => {
     {
       id: 1,
       name: 'Camera Tripod',
-      postedBy: 'AV Services',
+      type: 'Equipment',
+      location: 'Media Room 3',
+      campus: 'UH Mānoa',
+      postedDate: 'Posted April 21, 2025',
       imageUrl: '/images/default-resource.jpg',
-      returnDeadline: 'Due by Friday',
     },
     {
       id: 2,
       name: 'Study Room A',
-      postedBy: 'Library Desk',
+      type: 'Room',
+      location: 'Hamilton Library 2nd Floor',
+      campus: 'UH Mānoa',
+      postedDate: 'Posted April 20, 2025',
       imageUrl: '/images/default-resource.jpg',
-      returnDeadline: 'Due in 3 hours',
     },
     {
       id: 3,
       name: 'Microscope',
-      postedBy: 'Science Lab',
+      type: 'Lab Equipment',
+      location: 'Bilger Hall 112',
+      campus: 'UH Mānoa',
+      postedDate: 'Posted April 18, 2025',
       imageUrl: '/images/default-resource.jpg',
-      returnDeadline: 'Return tomorrow',
     },
   ];
 
@@ -90,7 +96,7 @@ const Home = () => {
             <Col>
               <h2 className="fw-bold mb-3">Recently Available Resources</h2>
               <p className="lead" style={{ maxWidth: '700px', margin: '0 auto' }}>
-                Browse a selection of the most recently posted rooms, equipment, and tools on campus. These resources are available now, and you can borrow them directly by clicking one of the options above or exploring further.
+                Browse a selection of the most recently posted rooms, equipment, and tools on campus. These resources are available now, and you can borrow them directly by clicking one of the options bellow or exploring further on our Borrow Equipment Tab.
               </p>
             </Col>
           </Row>
@@ -111,11 +117,13 @@ const Home = () => {
                   <Card.Body className="bg-white text-dark">
                     <Card.Title>{res.name}</Card.Title>
                     <Card.Text>
-                      <small>Posted by: {res.postedBy}</small>
+                      <small><b>Type:</b> {res.type}</small><br />
+                      <small><b>Location:</b> {res.location}</small><br />
+                      <small><b>Campus:</b> {res.campus}</small>
                     </Card.Text>
                   </Card.Body>
-                  <Card.Footer className="bg-danger text-white text-center">
-                    <small>{res.returnDeadline}</small>
+                  <Card.Footer className="bg-secondary text-white text-center">
+                    <small>{res.postedDate}</small>
                   </Card.Footer>
                 </Card>
               </Col>
