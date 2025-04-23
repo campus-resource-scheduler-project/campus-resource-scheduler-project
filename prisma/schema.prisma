@@ -27,15 +27,15 @@ model User {
   email    String @unique
   password String
   role     Role   @default(USER)
-  name     String
-  image    String
-  occupation String
-  bio      String
-  major    String
-  standing String
-  campus   String
-  phone    String
-  personal String
+  name     String   @default("")
+  image    String   @default("")
+  occupation String @default("")
+  bio      String   @default("")
+  major    String   @default("")
+  standing String   @default("")
+  campus   String   @default("")
+  phone    String   @default("")
+  personal String   @default("")
 }
 
 enum Condition {
@@ -54,14 +54,14 @@ model Stuff {
 }
 
 model Resource {
-  id        Int
-  name      String
-  category  String
-  type      String
-  owner     String
-  location  String
-  campus    String
-  image     String
-  posted    String
-  deadline  String
+  id        Int       @id @default(autoincrement())  
+  name      String  @default("")
+  category  String  @default("")
+  type      String  @default("")
+  owner     String  @default("")
+  location  String  @default("")
+  campus    String  @default("")
+  image     String  @default("")
+  posted    String  @default("")
+  deadline  String  @default("")
 }
