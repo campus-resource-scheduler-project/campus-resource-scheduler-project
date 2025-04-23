@@ -54,7 +54,7 @@ model Stuff {
 }
 
 model Resource {
-  id        Int
+  id        Int    @id @default(autoincrement())
   name      String
   category  String
   type      String
