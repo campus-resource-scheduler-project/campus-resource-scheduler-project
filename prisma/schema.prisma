@@ -52,3 +52,16 @@ model Stuff {
   condition Condition @default(good)
   owner     String
 }
+
+model Resource {
+  id        Int
+  name      String
+  category  String
+  type      String
+  owner     String
+  location  String
+  campus    String
+  image     String
+  posted    String
+  deadline  String
+}
