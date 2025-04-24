@@ -21,10 +21,10 @@ async function main() {
         image: account.image,
         occupation: account.occupation,
         bio: account.bio,
-        phone: account.phone,
         major: account.major,
         standing: account.standing,
         campus: account.campus,
+        phone: account.phone,
         personal: account.personal,
       },
     });
