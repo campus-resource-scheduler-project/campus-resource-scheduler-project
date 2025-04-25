@@ -66,7 +66,6 @@ const AdminPage = async () => {
                   {' '}
                   {res.deadline}
                 </p>
-                {res.image && <img src={res.image} alt={res.name} style={{ maxWidth: '200px' }} />}
                 <div className="mt-2">
                   <Link href={`/admin/resources/edit/${res.id}`} className="btn btn-primary me-2">Edit</Link>
                   <Link href={`/admin/resources/delete/${res.id}`} className="btn btn-danger">Delete</Link>
