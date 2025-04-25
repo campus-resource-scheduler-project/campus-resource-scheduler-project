@@ -13,7 +13,7 @@ const Home = () => (
         </h1>
         <Row className="justify-content-center align-items-center">
           <Col className="text-center col-auto mx-5">
-            <Button size="lg" id="landing-button" className="mt-2 rounded-0" href="/" style={{ backgroundColor: '#363636', border: 'none' }}>
+            <Button size="lg" id="landing-button" className="mt-2 rounded-0" href="/available-equipment" style={{ backgroundColor: '#363636', border: 'none' }}>
               <b>Borrow Equipment</b>
             </Button>
           </Col>

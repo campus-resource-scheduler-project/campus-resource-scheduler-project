@@ -1,13 +1,78 @@
 {
   "defaultAccounts": [
-    { "email": "admin@foo.com", "password": "changeme", "role": "ADMIN", "name": "Admin", "occupation":"Admin", "bio": "default", "major": "N/A", "standing": "N/A", "campus": "University of Hawaii at Manoa", "phone": "(808) 123-4321", "personal": "admin@gmail.com", "image": "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da847df5b05db6f8ca5698f13cbc" },
-    { "email": "john@foo.com", "password": "changeme",  "name": "John Foo", "occupation": "Student", "bio": "CS Major at WCC. I am unemployed. I need resources n stuff.", "major": "Computer Science", "standing": "Junior", "campus": "Windward Community College", "phone": "(808) 432-1234", "personal": "johnfoo@gmail.com", "image": "https://freepngimg.com/thumb/man/22654-6-man-thumb.png" }
+    {
+      "email": "admin@foo.com",
+      "password": "changeme",
+      "role": "ADMIN",
+      "name": "Admin",
+      "occupation": "Admin",
+      "bio": "default",
+      "major": "N/A",
+      "standing": "N/A",
+      "campus": "University of Hawaii at Manoa",
+      "phone": "(808) 123-4321",
+      "personal": "admin@gmail.com",
+      "image": "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da847df5b05db6f8ca5698f13cbc"
+    },
+    {
+      "email": "john@foo.com",
+      "password": "changeme",
+      "name": "John Foo",
+      "occupation": "Student",
+      "bio": "CS Major at WCC. I am unemployed. I need resources n stuff.",
+      "major": "Computer Science",
+      "standing": "Junior",
+      "campus": "Windward Community College",
+      "phone": "(808) 432-1234",
+      "personal": "johnfoo@gmail.com",
+      "image": "https://freepngimg.com/thumb/man/22654-6-man-thumb.png"
+    }
   ],
-
   "defaultData": [
-    { "name": "Basket", "quantity": 3, "owner": "john@foo.com", "condition": "excellent" },
-    { "name": "Bicycle", "quantity": 2, "owner": "john@foo.com", "condition": "poor" },
-    { "name": "Banana", "quantity": 2, "owner": "admin@foo.com", "condition": "good" },
-    { "name": "Boogie Board", "quantity": 2, "owner": "admin@foo.com", "condition": "excellent" }
-  ]
-}
+    {
+      "name": "Web Dev Lab",
+      "category": "room",
+      "type": "Computer Lab",
+      "owner": "john@foo.com",
+      "location": "Building A",
+      "campus": "Manoa",
+      "image": "/images/web-lab.jpg",
+      "posted": "2025-04-18",
+      "deadline": "2025-04-25"
+    },
+    {
+      "name": "Creative Commons",
+      "category": "room",
+      "type": "Study Room",
+      "owner": "admin@foo.com",
+      "location": "Building B",
+      "campus": "West Oahu",
+      "image": "/images/study-room.jpg",
+      "posted": "2025-04-16",
+      "deadline": "2025-04-24"
+    },
+    {
+      "name": "Zoom Pod",
+      "category": "room",
+      "type": "Private Booth",
+      "owner": "john@foo.com",
+      "location": "Building C",
+      "campus": "Leeward",
+      "image": "/images/zoom-booth.jpg",
+      "posted": "2025-04-17",
+      "deadline": "2025-04-28"
+    }
+  ],
+  "defaultResources": [
+  {
+    "name": "ICS 101 Lab",
+    "category": "room",
+    "type": "Lab",
+    "owner": "john@foo.com",
+    "location": "POST 302",
+    "campus": "UH Manoa",
+    "image": "/images/ics-lab.jpg",
+    "posted": "2025-04-22",
+    "deadline": "2025-05-01"
+  }
+]}
