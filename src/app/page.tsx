@@ -1,5 +1,7 @@
 /* eslint-disable max-len */
+
 'use client';
+
 import { Button, Card, Col, Container, Row } from 'react-bootstrap';
 import Image from 'next/image';
 
@@ -41,7 +43,9 @@ const Home = () => {
       <Row className="justify-content-center align-items-center" style={{ height: '100vh' }}>
         <Col className="text-center">
           <h1 style={{ color: 'black' }}>
-            Welcome to <b>Campus Resource Scheduler!</b>
+            Welcome to
+            {' '}
+            <b>Campus Resource Scheduler!</b>
           </h1>
           <Row className="justify-content-center align-items-center">
             <Col className="text-center col-auto mx-5">
@@ -70,7 +74,11 @@ const Home = () => {
           <Row className="justify-content-center align-items-center">
             <Col className="mt-5 text-center">
               <h1 style={{ color: 'black', fontSize: '24px' }}>
-                or try our <b>LoanLink</b> AI to help you find what you need.
+                or try our
+                {' '}
+                <b>LoanLink</b>
+                {' '}
+                AI to help you find what you need.
               </h1>
               <Col className="text-center">
                 <Button
@@ -117,9 +125,23 @@ const Home = () => {
                   <Card.Body className="bg-white text-dark">
                     <Card.Title>{res.name}</Card.Title>
                     <Card.Text>
-                      <small><b>Type:</b> {res.type}</small><br />
-                      <small><b>Location:</b> {res.location}</small><br />
-                      <small><b>Campus:</b> {res.campus}</small>
+                      <small>
+                        <b>Type:</b>
+                        {' '}
+                        {res.type}
+                      </small>
+                      <br />
+                      <small>
+                        <b>Location:</b>
+                        {' '}
+                        {res.location}
+                      </small>
+                      <br />
+                      <small>
+                        <b>Campus:</b>
+                        {' '}
+                        {res.campus}
+                      </small>
                     </Card.Text>
                   </Card.Body>
                   <Card.Footer className="bg-secondary text-white text-center">
