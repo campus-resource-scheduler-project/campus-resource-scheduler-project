@@ -68,7 +68,7 @@ const AdminHomePage = async () => {
                   </Card.Text>
                   <Card.Text className="mb-1">
                     <strong>Location:</strong> {item.location}<br />
-                    <strong>Campus:</strong> {item.campus}
+                    <String>Campus:</String> {item.campus}
                   </Card.Text>
                   <Card.Text className="mb-1">
                     <strong>Posted:</strong> {item.posted}<br />

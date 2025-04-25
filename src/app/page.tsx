@@ -1,10 +1,19 @@
 /* eslint-disable max-len */
-'use client';
-import { Button, Card, Col, Container, Row } from 'react-bootstrap';
-import Image from 'next/image';
+import { getServerSession } from 'next-auth';
+import authOptions from '@/lib/authOptions';
+import AdminHomePage from './admin/page';
+import { Button, Col, Container, Row } from 'react-bootstrap';
+import ResourceCard from '@/components/ResourceCard'; // new client component for cards
 
-/** The Home page. */
-const Home = () => {
+const Page = async () => {
+  const session = await getServerSession(authOptions);
+  const isAdmin = (session?.user as any)?.role === 'admin';
+
+  if (isAdmin) {
+    return <AdminHomePage />;
+  }
+
+  // Mock resource data for homepage
   const mockResources = [
     {
       id: 1,
@@ -88,44 +97,22 @@ const Home = () => {
         </Col>
       </Row>
 
-      {/* Full-Width Recently Available Section with UH Mānoa Green */}
+      {/* Recently Available Resources Section */}
       <div style={{ backgroundColor: '#00694b', color: 'white', padding: '4rem 1rem' }}>
         <Container>
-          {/* Overview/Instructions */}
           <Row className="mb-4 text-center">
             <Col>
               <h2 className="fw-bold mb-3">Recently Available Resources</h2>
               <p className="lead" style={{ maxWidth: '700px', margin: '0 auto' }}>
-                Browse a selection of the most recently posted rooms, equipment, and tools on campus. These resources are available now, and you can borrow them directly by clicking one of the options bellow or exploring further on our Borrow Equipment Tab.
+                Browse a selection of the most recently posted rooms, equipment, and tools on campus. These resources are available now, and you can borrow them directly by clicking one of the options below or exploring further on our Borrow Equipment tab.
               </p>
             </Col>
           </Row>
 
-          {/* Card Grid */}
           <Row className="g-4 justify-content-center">
             {mockResources.map((res) => (
               <Col key={res.id} xs={12} sm={6} md={4} lg={3}>
-                <Card className="h-100 shadow-sm border-0">
-                  <div style={{ height: '160px', position: 'relative' }}>
-                    <Image
-                      src={res.imageUrl}
-                      alt={res.name}
-                      fill
-                      style={{ objectFit: 'cover', borderTopLeftRadius: '0.375rem', borderTopRightRadius: '0.375rem' }}
-                    />
-                  </div>
-                  <Card.Body className="bg-white text-dark">
-                    <Card.Title>{res.name}</Card.Title>
-                    <Card.Text>
-                      <small><b>Type:</b> {res.type}</small><br />
-                      <small><b>Location:</b> {res.location}</small><br />
-                      <small><b>Campus:</b> {res.campus}</small>
-                    </Card.Text>
-                  </Card.Body>
-                  <Card.Footer className="bg-secondary text-white text-center">
-                    <small>{res.postedDate}</small>
-                  </Card.Footer>
-                </Card>
+                <ResourceCard res={res} />
               </Col>
             ))}
           </Row>
@@ -135,4 +122,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Page;
