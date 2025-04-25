@@ -4,6 +4,7 @@ import { prisma } from '@/lib/prisma';
 import { adminProtectedPage } from '@/lib/page-protection';
 import authOptions from '@/lib/authOptions';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const AdminPage = async () => {
   const session = await getServerSession(authOptions);
@@ -66,6 +67,15 @@ const AdminPage = async () => {
                   {' '}
                   {res.deadline}
                 </p>
+                {res.image && (
+                <Image
+                  src={res.image}
+                  alt={res.name}
+                  width={200}
+                  height={150} // adjust this based on your image aspect ratio
+                  style={{ objectFit: 'cover' }}
+                />
+                )}
                 <div className="mt-2">
                   <Link href={`/admin/resources/edit/${res.id}`} className="btn btn-primary me-2">Edit</Link>
                   <Link href={`/admin/resources/delete/${res.id}`} className="btn btn-danger">Delete</Link>
