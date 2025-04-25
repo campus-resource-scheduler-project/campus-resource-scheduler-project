@@ -1,19 +1,37 @@
 {
   "defaultAccounts": [
-    { "email": "admin@foo.com", "password": "changeme", "role": "ADMIN", "name": "Admin", "occupation":"Admin", "bio": "default", "major": "N/A", "standing": "N/A", "campus": "University of Hawaii at Manoa", "phone": "(808) 123-4321", "personal": "admin@gmail.com", "image": "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da847df5b05db6f8ca5698f13cbc" },
-    { "email": "john@foo.com", "password": "changeme",  "name": "John Foo", "occupation": "Student", "bio": "CS Major at WCC. I am unemployed. I need resources n stuff.", "major": "Computer Science", "standing": "Junior", "campus": "Windward Community College", "phone": "(808) 432-1234", "personal": "johnfoo@gmail.com", "image": "https://freepngimg.com/thumb/man/22654-6-man-thumb.png" }
+    {
+      "email": "admin@foo.com",
+      "password": "changeme",
+      "role": "ADMIN",
+      "name": "Admin",
+      "occupation": "Admin",
+      "bio": "default",
+      "major": "N/A",
+      "standing": "N/A",
+      "campus": "University of Hawaii at Manoa",
+      "phone": "(808) 123-4321",
+      "personal": "admin@gmail.com",
+      "image": "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da847df5b05db6f8ca5698f13cbc"
+    },
+    {
+      "email": "john@foo.com",
+      "password": "changeme",
+      "name": "John Foo",
+      "occupation": "Student",
+      "bio": "CS Major at WCC. I am unemployed. I need resources n stuff.",
+      "major": "Computer Science",
+      "standing": "Junior",
+      "campus": "Windward Community College",
+      "phone": "(808) 432-1234",
+      "personal": "johnfoo@gmail.com",
+      "image": "https://freepngimg.com/thumb/man/22654-6-man-thumb.png"
+    }
   ],
-
   "defaultData": [
     { "name": "Basket", "quantity": 3, "owner": "john@foo.com", "condition": "excellent" },
     { "name": "Bicycle", "quantity": 2, "owner": "john@foo.com", "condition": "poor" },
     { "name": "Banana", "quantity": 2, "owner": "admin@foo.com", "condition": "good" },
     { "name": "Boogie Board", "quantity": 2, "owner": "admin@foo.com", "condition": "excellent" }
-  ],
-  "defaultResources": [
-    { "name": "Pencil", "category": "general", "type": "physical", "owner": "john@foo.com", "location": "POST 309", "campus": "UH Manoa", "image": "https://img.freepik.com/free-vector/pencil-round-smooth-style_78370-7571.jpg?semt=ais_hybrid&w=740", "posted": "04/20/25 10:00", "deadline": "04/20/25 12:00" },
-    { "name": "Computer", "category": "electronic", "type": "physical", "owner": "admin@foo.com", "location": "POST 310", "campus": "UH West Oahu", "image": "https://img.freepik.com/free-vector/desktop-computer-vconcept-illustration_114360-12153.jpg?semt=ais_hybrid&w=740", "posted": "04/02/25 8:00", "deadline": "04/12/25 15:30" },
-    { "name": "Computer Lab", "category": "Lab", "type": "room", "owner": "john@foo.com", "location": "POST 302", "campus": "UH Manoa", "image": "https://manoa.hawaii.edu/library/wp-content/uploads/2017/10/clic-lab.jpg", "posted": "04/25/25 16:00", "deadline": "04/26/25 09:00" },
-    { "name": "Study Room", "category": "study", "type": "room", "owner": "admin@foo.com", "location": "POST 313", "campus": "Kapiolani CC", "image": "https://manoa.hawaii.edu/library/wp-content/uploads/2017/10/study-room-addition-3.jpg", "posted": "04/18/25 10:00", "deadline": "04/19/25 10:25" }
   ]
 }

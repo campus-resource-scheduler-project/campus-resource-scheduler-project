@@ -18,7 +18,7 @@ const Home = () => (
             </Button>
           </Col>
           <Col className="text-center col-auto mx-5">
-            <Button size="lg" id="landing-button" className="mt-2 rounded-0" href="/" style={{ backgroundColor: '#363636', border: 'none' }}>
+            <Button size="lg" id="landing-button" className="mt-2 rounded-0" href="/available-rooms" style={{ backgroundColor: '#363636', border: 'none' }}>
               <b>Borrow Rooms</b>
             </Button>
           </Col>

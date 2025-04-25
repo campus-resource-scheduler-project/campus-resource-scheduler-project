@@ -47,14 +47,6 @@ enum Condition {
 
 model Stuff {
   id        Int       @id @default(autoincrement())
-  name      String
-  quantity  Int
-  condition Condition @default(good)
-  owner     String
-}
-
-model Resource {
-  id        Int       @id @default(autoincrement())
   name      String  @default("")
   category  String  @default("")
   type      String  @default("")
