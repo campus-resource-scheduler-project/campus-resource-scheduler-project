@@ -1,0 +1,45 @@
+{
+  "cookies": [
+    {
+      "name": "__Host-next-auth.csrf-token",
+      "value": "f3e6fb54fb390c0b98479492698af8c31e1cea3242cc12537a25733d8f133d1d%7C0861b2a876ec4567547e8879eba5b59ff682248b97221f34afb52c5dccb05d29",
+      "domain": "campus-resource-scheduler-project.vercel.app",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "__Secure-next-auth.callback-url",
+      "value": "https%3A%2F%2Fcampus-resource-scheduler-project.vercel.app%2F",
+      "domain": "campus-resource-scheduler-project.vercel.app",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "__Secure-next-auth.session-token",
+      "value": "eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..foOP2mMRZEqaopEt.zwtdbEz5fI2QpIribfWT6GGcr5OGLZ8Teo9gFCYp3bLcT_dLN1v4Ttg0ie6I2R81sSrODzRG-PUKCNQmQPpeAD5NlnEeONvWXA51j1pfogNHopQVF0Nz4uXiz-g2PN3AWCXRvkh1CqGZvM7wkOGi4v2ujzCNhqk6d8d0o6sf8D2LqRAv3NubsGi0yDFaAV8.heKr-bC3Hd50lTnvqOCSyQ",
+      "domain": "campus-resource-scheduler-project.vercel.app",
+      "path": "/",
+      "expires": 1748149758.481984,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "https://campus-resource-scheduler-project.vercel.app",
+      "localStorage": [
+        {
+          "name": "nextauth.message",
+          "value": "{\"event\":\"session\",\"data\":{\"trigger\":\"getSession\"},\"timestamp\":1745557758}"
+        }
+      ]
+    }
+  ]
+}
