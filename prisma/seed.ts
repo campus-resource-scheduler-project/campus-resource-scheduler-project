@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 import { PrismaClient, Role, Condition } from '@prisma/client';
 import { hash } from 'bcrypt';
 import * as config from '../config/settings.development.json';
@@ -30,6 +31,24 @@ async function main() {
     });
     // console.log(`  Created user: ${user.email} with role: ${user.role}`);
   });
+  for (const resource of config.defaultResources) {
+    console.log(`  Adding resource: ${JSON.stringify(resource.name)}`);
+    await prisma.resource.upsert({
+      where: { id: config.defaultResources.indexOf(resource) + 1 },
+      update: {},
+      create: {
+        name: resource.name,
+        category: resource.category,
+        type: resource.type,
+        owner: resource.owner,
+        location: resource.location,
+        campus: resource.campus,
+        image: resource.image,
+        posted: resource.posted,
+        deadline: resource.deadline,
+      },
+    });
+  }
   for (const data of config.defaultData) {
     const condition = data.condition as Condition || Condition.good;
     console.log(`  Adding stuff: ${JSON.stringify(data)}`);
