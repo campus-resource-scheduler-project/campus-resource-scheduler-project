@@ -7,7 +7,8 @@
     "dev-https": "next dev --experimental-https",
     "build": "prisma generate && next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "playwright-development": "npx playwright test",
     "playwright-ci": "next dev && npx playwright test"
   },

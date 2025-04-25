@@ -5,7 +5,6 @@ import { prisma } from '@/lib/prisma';
 import { adminProtectedPage } from '@/lib/page-protection';
 import authOptions from '@/lib/authOptions';
 
-
 const AdminPage = async () => {
   const session = await getServerSession(authOptions);
   adminProtectedPage(

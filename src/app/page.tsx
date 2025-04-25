@@ -10,7 +10,6 @@ import { useSession } from 'next-auth/react';
 const Home = () => {
   const { data: session } = useSession();
   const isAdmin = session?.user?.email === 'admin@foo.com';
-  const isJohn = session?.user?.email === 'john@foo.com';
 
   const mockResources = [
     {
@@ -52,7 +51,7 @@ const Home = () => {
       campus: 'UH Mānoa',
       postedDate: 'Posted April 25, 2025',
       imageUrl: '/images/default-resource.jpg',
-    }
+    },
   ];
 
   // Admin-specific content
@@ -63,7 +62,11 @@ const Home = () => {
         <Row className="justify-content-center align-items-center" style={{ height: '100vh' }}>
           <Col className="text-center">
             <h1 style={{ color: 'black' }}>
-              Welcome <b>Admin</b> to Campus Resource Scheduler!
+              Welcome
+              {' '}
+              <b>Admin</b>
+              {' '}
+              to Campus Resource Scheduler!
             </h1>
             <Row className="justify-content-center align-items-center">
               <Col className="text-center col-auto mx-5">
