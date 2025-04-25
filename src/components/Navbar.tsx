@@ -58,14 +58,17 @@ const NavBar: React.FC = () => {
             <DropdownButton id="logged-in" title={currentUser} size="lg" className="mt-2 rounded-0" variant="none" style={{ backgroundColor: '#363636', border: 'none' }}>
                 <NavDropdown.Item id="login-dropdown-sign-out" href="/profile">
                 <Person />
+                  {' '}
                   Profile
                 </NavDropdown.Item>
                 <NavDropdown.Item id="login-dropdown-sign-out" href="/api/auth/signout">
                   <BoxArrowRight />
+                  {' '}
                   Sign Out
                 </NavDropdown.Item>
                 <NavDropdown.Item id="login-dropdown-change-password" href="/auth/change-password">
                   <Lock />
+                  {' '}
                   Change Password
                 </NavDropdown.Item>
             </DropdownButton>
@@ -73,11 +76,13 @@ const NavBar: React.FC = () => {
             <DropdownButton size="lg" className="mt-2 rounded-0" variant="none" style={{ backgroundColor: '#363636', border: 'none' }} title="Login" id="login-dropdown">
                 <NavDropdown.Item id="login-dropdown-sign-in" href="/auth/signin">
                   <PersonFill />
-                  Sign in
+                  {' '}
+                  Sign In
                 </NavDropdown.Item>
                 <NavDropdown.Item id="login-dropdown-sign-up" href="/auth/signup">
                   <PersonPlusFill />
-                  Sign up
+                  {' '}
+                  Sign Up
                 </NavDropdown.Item>
             </DropdownButton>
             )}
