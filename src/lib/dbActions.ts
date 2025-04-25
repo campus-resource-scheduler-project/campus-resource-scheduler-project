@@ -128,3 +128,47 @@ export async function changePassword(credentials: { email: string; password: str
     },
   });
 }
+
+export async function addResource(resource: {
+  name: string;
+  category: string;
+  type: string;
+  owner: string;
+  location: string;
+  campus: string;
+  image: string;
+  posted: string;
+  deadline: string;
+}) {
+  await prisma.resource.create({ data: resource });
+  redirect('/admin');
+}
+
+export async function getResourceById(id: number) {
+  return prisma.resource.findUnique({ where: { id } });
+}
+
+export async function editResource(resource: {
+  id: number;
+  name: string;
+  category: string;
+  type: string;
+  owner: string;
+  location: string;
+  campus: string;
+  image: string;
+  posted: string;
+  deadline: string;
+}) {
+  const { id, ...rest } = resource;
+  await prisma.resource.update({
+    where: { id },
+    data: rest,
+  });
+  redirect('/admin');
+}
+
+export async function deleteResource(id: number) {
+  await prisma.resource.delete({ where: { id } });
+  redirect('/admin');
+}
