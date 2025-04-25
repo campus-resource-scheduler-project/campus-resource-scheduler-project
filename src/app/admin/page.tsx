@@ -1,9 +1,9 @@
 import { getServerSession } from 'next-auth';
-import { Col, Container, Row, Table } from 'react-bootstrap';
-import StuffItemAdmin from '@/components/StuffItemAdmin';
+import { Col, Container, Row, Button } from 'react-bootstrap';
 import { prisma } from '@/lib/prisma';
 import { adminProtectedPage } from '@/lib/page-protection';
 import authOptions from '@/lib/authOptions';
+import Link from 'next/link';
 
 const AdminPage = async () => {
   const session = await getServerSession(authOptions);
@@ -12,52 +12,68 @@ const AdminPage = async () => {
       user: { email: string; id: string; randomKey: string };
     } | null,
   );
-  const stuff = await prisma.stuff.findMany({});
-  const users = await prisma.user.findMany({});
+
+  const resources = await prisma.resource.findMany({});
 
   return (
     <main>
-      <Container id="list" fluid className="py-3">
+
+      <div className="text-center mt-4">
+        <Link href="/admin/resources/new">
+          <Button variant="success">Add New Resource</Button>
+        </Link>
+      </div>
+
+      <Container fluid className="py-3">
         <Row>
           <Col>
-            <h1>List Stuff Admin</h1>
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Quantity</th>
-                  <th>Condition</th>
-                  <th>Owner</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {stuff.map((item) => (
-                  <StuffItemAdmin key={item.id} {...item} />
-                ))}
-              </tbody>
-            </Table>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <h1>List Users Admin</h1>
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Email</th>
-                  <th>Role</th>
-                </tr>
-              </thead>
-              <tbody>
-                {users.map((user) => (
-                  <tr key={user.id}>
-                    <td>{user.email}</td>
-                    <td>{user.role}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+            <h1>Resources</h1>
+            {resources.map((res) => (
+              <div key={res.id} className="border rounded p-3 mb-3">
+                <h4>{res.name}</h4>
+                <p>
+                  <strong>Owner:</strong>
+                  {' '}
+                  {res.owner || 'None'}
+                </p>
+                <p>
+                  <strong>Type:</strong>
+                  {' '}
+                  {res.type}
+                </p>
+                <p>
+                  <strong>Category:</strong>
+                  {' '}
+                  {res.category}
+                </p>
+                <p>
+                  <strong>Campus:</strong>
+                  {' '}
+                  {res.campus}
+                </p>
+                <p>
+                  <strong>Location:</strong>
+                  {' '}
+                  {res.location}
+                </p>
+                <p>
+                  <strong>Posted:</strong>
+                  {' '}
+                  {res.posted}
+                </p>
+                <p>
+                  <strong>Deadline:</strong>
+                  {' '}
+                  {res.deadline}
+                </p>
+                {res.image && <img src={res.image} alt={res.name} style={{ maxWidth: '200px' }} />}
+                <div className="mt-2">
+                  <Link href={`/admin/resources/edit/${res.id}`} className="btn btn-primary me-2">Edit</Link>
+                  <Link href={`/admin/resources/delete/${res.id}`} className="btn btn-danger">Delete</Link>
+                </div>
+              </div>
+            ))}
+
           </Col>
         </Row>
       </Container>
