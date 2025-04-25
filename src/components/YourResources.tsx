@@ -122,7 +122,8 @@ const YourResources: React.FC = () => {
                 <div className="d-flex justify-content-between mb-2">
                   <span>{resource.category}</span>
                   <span>
-                    Posted: 
+                    Posted:
+                    {' '}
                     {resource.posted}
                   </span>
                 </div>
@@ -139,13 +140,43 @@ const YourResources: React.FC = () => {
                 type="button"
                 className="btn btn-danger text-white w-100 py-2 rounded-0 rounded-bottom"
                 onClick={() => {
-                  if (confirm(`Are you sure you want to return ${resource.name}?`)) {
-                    // Here you would add the API call to return the resource
-                    // For example: returnResource(resource.id)
-                    alert(`${resource.name} has been returned successfully`);
-                    // In a real implementation, you would remove the item from the list
-                    // or refresh the data from the server
-                  }
+                  const handleReturn = () => {
+                    const handleConfirmReturn = async () => {
+                      // Replace this with a custom modal or confirmation dialog
+                      const userConfirmed = await new Promise((resolve) => {
+                        const confirmModal = document.createElement('div');
+                        confirmModal.innerHTML = `
+                          <div class="modal-backdrop">
+                            <div class="modal-content">
+                              <p>Are you sure you want to return ${resource.name}?</p>
+                              <button id="confirm-yes">Yes</button>
+                              <button id="confirm-no">No</button>
+                            </div>
+                          </div>
+                        `;
+                        document.body.appendChild(confirmModal);
+
+                        confirmModal.querySelector('#confirm-yes')?.addEventListener('click', () => {
+                          resolve(true);
+                          document.body.removeChild(confirmModal);
+                        });
+
+                        confirmModal.querySelector('#confirm-no')?.addEventListener('click', () => {
+                          resolve(false);
+                          document.body.removeChild(confirmModal);
+                        });
+                      });
+
+                      if (userConfirmed) {
+                        console.log(`${resource.name} has been returned successfully`);
+                        // Add API call or notification system here
+                      }
+                    };
+
+                    handleConfirmReturn();
+                  };
+
+                  handleReturn();
                 }}
               >
                 Return by:
@@ -155,7 +186,6 @@ const YourResources: React.FC = () => {
             </Card>
           </Col>
         ))}
-        
       </Row>
     </Container>
   );

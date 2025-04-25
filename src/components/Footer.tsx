@@ -15,12 +15,6 @@ const Footer = () => (
       />
       <Row id="footer-divs" className="w-75 ms-auto align-items-tops">
         <Col>
-          <h5 className="text-decoration-none"><b>Quick Links</b></h5>
-          <li><a href="/" id="footer-links">Equipment</a></li>
-          <li><a href="/" id="footer-links">Rooms</a></li>
-          <li><a href="/" id="footer-links">Your Resources</a></li>
-        </Col>
-        <Col>
           <h5 className="text-decoration-none"><b>About Us</b></h5>
           <li><a href="https://github.com/campus-resource-scheduler-project" id="footer-links">GitHub</a></li>
           <li><a href="https://campus-resource-scheduler-project.github.io" id="footer-links">Project Information</a></li>
