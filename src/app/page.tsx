@@ -1,19 +1,17 @@
 /* eslint-disable max-len */
-import { getServerSession } from 'next-auth';
-import authOptions from '@/lib/authOptions';
-import AdminHomePage from './admin/page';
-import { Button, Col, Container, Row } from 'react-bootstrap';
-import ResourceCard from '@/components/ResourceCard'; // new client component for cards
 
-const Page = async () => {
-  const session = await getServerSession(authOptions);
-  const isAdmin = (session?.user as any)?.role === 'admin';
+'use client';
 
-  if (isAdmin) {
-    return <AdminHomePage />;
-  }
+import { Button, Card, Col, Container, Row } from 'react-bootstrap';
+import Image from 'next/image';
+import { useSession } from 'next-auth/react';
 
-  // Mock resource data for homepage
+/** The Home page. */
+const Home = () => {
+  const { data: session } = useSession();
+  const isAdmin = session?.user?.email === 'admin@foo.com';
+  const isJohn = session?.user?.email === 'john@foo.com';
+
   const mockResources = [
     {
       id: 1,
@@ -44,13 +42,125 @@ const Page = async () => {
     },
   ];
 
+  const adminResources = [
+    ...mockResources,
+    {
+      id: 4,
+      name: 'Admin Resource',
+      type: 'Special Equipment',
+      location: 'Admin Office',
+      campus: 'UH Mānoa',
+      postedDate: 'Posted April 25, 2025',
+      imageUrl: '/images/default-resource.jpg',
+    }
+  ];
+
+  // Admin-specific content
+  if (isAdmin) {
+    return (
+      <main id="hasBG" style={{ overflowX: 'hidden' }}>
+        {/* Admin Hero section */}
+        <Row className="justify-content-center align-items-center" style={{ height: '100vh' }}>
+          <Col className="text-center">
+            <h1 style={{ color: 'black' }}>
+              Welcome <b>Admin</b> to Campus Resource Scheduler!
+            </h1>
+            <Row className="justify-content-center align-items-center">
+              <Col className="text-center col-auto mx-5">
+                <Button
+                  size="lg"
+                  id="landing-button"
+                  className="mt-2 rounded-0"
+                  href="/admin/dashboard"
+                  style={{ backgroundColor: '#00694b', border: 'none' }}
+                >
+                  <b>Admin Dashboard</b>
+                </Button>
+              </Col>
+              <Col className="text-center col-auto mx-5">
+                <Button
+                  size="lg"
+                  id="landing-button"
+                  className="mt-2 rounded-0"
+                  href="/admin/resources"
+                  style={{ backgroundColor: '#00694b', border: 'none' }}
+                >
+                  <b>Manage Resources</b>
+                </Button>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+
+        {/* Admin-specific resources section */}
+        <div style={{ backgroundColor: '#363636', color: 'white', padding: '4rem 1rem' }}>
+          <Container>
+            <Row className="mb-4 text-center">
+              <Col>
+                <h2 className="fw-bold mb-3">All Resources (Admin View)</h2>
+                <p className="lead" style={{ maxWidth: '700px', margin: '0 auto' }}>
+                  As an admin, you can view and manage all resources in the system.
+                </p>
+              </Col>
+            </Row>
+
+            <Row className="g-4 justify-content-center">
+              {adminResources.map((res) => (
+                <Col key={res.id} xs={12} sm={6} md={4} lg={3}>
+                  <Card className="h-100 shadow-sm border-0">
+                    <div style={{ height: '160px', position: 'relative' }}>
+                      <Image
+                        src={res.imageUrl}
+                        alt={res.name}
+                        fill
+                        style={{ objectFit: 'cover', borderTopLeftRadius: '0.375rem', borderTopRightRadius: '0.375rem' }}
+                      />
+                    </div>
+                    <Card.Body className="bg-white text-dark">
+                      <Card.Title>{res.name}</Card.Title>
+                      <Card.Text>
+                        <small>
+                          <b>Type:</b>
+                          {' '}
+                          {res.type}
+                        </small>
+                        <br />
+                        <small>
+                          <b>Location:</b>
+                          {' '}
+                          {res.location}
+                        </small>
+                        <br />
+                        <small>
+                          <b>Campus:</b>
+                          {' '}
+                          {res.campus}
+                        </small>
+                      </Card.Text>
+                    </Card.Body>
+                    <Card.Footer className="bg-secondary text-white text-center">
+                      <small>{res.postedDate}</small>
+                    </Card.Footer>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+          </Container>
+        </div>
+      </main>
+    );
+  }
+
+  // Regular user content (for john@foo.com or any other non-admin user)
   return (
     <main id="hasBG" style={{ overflowX: 'hidden' }}>
       {/* Hero section */}
       <Row className="justify-content-center align-items-center" style={{ height: '100vh' }}>
         <Col className="text-center">
           <h1 style={{ color: 'black' }}>
-            Welcome to <b>Campus Resource Scheduler!</b>
+            Welcome to
+            {' '}
+            <b>Campus Resource Scheduler!</b>
           </h1>
           <Row className="justify-content-center align-items-center">
             <Col className="text-center col-auto mx-5">
@@ -79,7 +189,11 @@ const Page = async () => {
           <Row className="justify-content-center align-items-center">
             <Col className="mt-5 text-center">
               <h1 style={{ color: 'black', fontSize: '24px' }}>
-                or try our <b>LoanLink</b> AI to help you find what you need.
+                or try our
+                {' '}
+                <b>LoanLink</b>
+                {' '}
+                AI to help you find what you need.
               </h1>
               <Col className="text-center">
                 <Button
@@ -97,22 +211,58 @@ const Page = async () => {
         </Col>
       </Row>
 
-      {/* Recently Available Resources Section */}
+      {/* Full-Width Recently Available Section with UH Mānoa Green */}
       <div style={{ backgroundColor: '#00694b', color: 'white', padding: '4rem 1rem' }}>
         <Container>
+          {/* Overview/Instructions */}
           <Row className="mb-4 text-center">
             <Col>
               <h2 className="fw-bold mb-3">Recently Available Resources</h2>
               <p className="lead" style={{ maxWidth: '700px', margin: '0 auto' }}>
-                Browse a selection of the most recently posted rooms, equipment, and tools on campus. These resources are available now, and you can borrow them directly by clicking one of the options below or exploring further on our Borrow Equipment tab.
+                Browse a selection of the most recently posted rooms, equipment, and tools on campus. These resources are available now, and you can borrow them directly by clicking one of the options bellow or exploring further on our Borrow Equipment Tab.
               </p>
             </Col>
           </Row>
 
+          {/* Card Grid */}
           <Row className="g-4 justify-content-center">
             {mockResources.map((res) => (
               <Col key={res.id} xs={12} sm={6} md={4} lg={3}>
-                <ResourceCard res={res} />
+                <Card className="h-100 shadow-sm border-0">
+                  <div style={{ height: '160px', position: 'relative' }}>
+                    <Image
+                      src={res.imageUrl}
+                      alt={res.name}
+                      fill
+                      style={{ objectFit: 'cover', borderTopLeftRadius: '0.375rem', borderTopRightRadius: '0.375rem' }}
+                    />
+                  </div>
+                  <Card.Body className="bg-white text-dark">
+                    <Card.Title>{res.name}</Card.Title>
+                    <Card.Text>
+                      <small>
+                        <b>Type:</b>
+                        {' '}
+                        {res.type}
+                      </small>
+                      <br />
+                      <small>
+                        <b>Location:</b>
+                        {' '}
+                        {res.location}
+                      </small>
+                      <br />
+                      <small>
+                        <b>Campus:</b>
+                        {' '}
+                        {res.campus}
+                      </small>
+                    </Card.Text>
+                  </Card.Body>
+                  <Card.Footer className="bg-secondary text-white text-center">
+                    <small>{res.postedDate}</small>
+                  </Card.Footer>
+                </Card>
               </Col>
             ))}
           </Row>
@@ -122,4 +272,4 @@ const Page = async () => {
   );
 };
 
-export default Page;
+export default Home;
