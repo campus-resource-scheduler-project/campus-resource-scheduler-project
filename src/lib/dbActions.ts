@@ -172,3 +172,23 @@ export async function deleteResource(id: number) {
   await prisma.resource.delete({ where: { id } });
   redirect('/admin');
 }
+
+/**
+ * Returns a resource by changing its owner to admin@foo.com
+ * @param id The ID of the resource to return
+ * @returns The updated resource
+ */
+export async function returnResource(id: number) {
+  try {
+    const updatedResource = await prisma.resource.update({
+      where: { id },
+      data: {
+        owner: 'admin@foo.com',
+      },
+    });
+    return { success: true, resource: updatedResource };
+  } catch (error) {
+    console.error('Error returning resource:', error);
+    return { success: false, error: 'Failed to return the resource' };
+  }
+}

@@ -49,3 +49,7 @@ export const EditResourceSchema = Yup.object({
   deadline: Yup.string().required('Deadline is required'),
   image: Yup.string().url('Must be a valid image URL').required('Image URL is required'),
 });
+
+export const ReturnResourceSchema = Yup.object({
+  id: Yup.number().required('Resource ID is required'),
+});

@@ -10,6 +10,7 @@
     { "name": "Banana", "quantity": 2, "owner": "admin@foo.com", "condition": "good" },
     { "name": "Boogie Board", "quantity": 2, "owner": "admin@foo.com", "condition": "excellent" }
   ],
+  
   "defaultResources": [
     { "name": "Pencil", "category": "general", "type": "physical", "owner": "john@foo.com", "location": "POST 309", "campus": "UH Manoa", "image": "https://img.freepik.com/free-vector/pencil-round-smooth-style_78370-7571.jpg?semt=ais_hybrid&w=740", "posted": "04/20/25 10:00", "deadline": "04/20/25 12:00" },
     { "name": "Computer", "category": "electronic", "type": "physical", "owner": "admin@foo.com", "location": "POST 310", "campus": "UH West Oahu", "image": "https://img.freepik.com/free-vector/desktop-computer-vconcept-illustration_114360-12153.jpg?semt=ais_hybrid&w=740", "posted": "04/02/25 8:00", "deadline": "04/12/25 15:30" },
