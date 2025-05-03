@@ -16,7 +16,7 @@
   "dependencies": {
     "@hookform/resolvers": "^3.6.0",
     "@ngneat/falso": "^7.2.0",
-    "@prisma/client": "^6.6.0",
+    "@prisma/client": "^6.7.0",
     "bcrypt": "^5.1.1",
     "bootstrap": "^5.3.3",
     "multiselect-react-dropdown": "^2.0.25",
@@ -45,7 +45,7 @@
     "playwright": "^1.52.0",
     "prettier": "^3.3.1",
     "prettier-eslint": "^16.3.0",
-    "prisma": "^6.6.0",
+    "prisma": "^6.7.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   }

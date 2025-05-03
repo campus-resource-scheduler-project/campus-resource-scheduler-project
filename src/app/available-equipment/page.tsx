@@ -1,38 +1,45 @@
+import { getServerSession } from 'next-auth/next';
+import { redirect } from 'next/navigation';
+import { PrismaClient } from '@prisma/client';
+import FilterSidebarEquipment from '@/components/FilterSidebarEquipment';
+import authOptions from '@/lib/authOptions';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import Image from 'next/image';
-import FilterSidebarEquipment from '@/components/FilterSidebarEquipment';
-// import { prisma } from '@/lib/prisma';
 
-const AvailableEquipment = async () => {
-  // TODO: Replace with actual Prisma query once db setup is fixed
-  /* const equipment = await prisma.stuff.findMany({
-    where: { category: 'equipment' },
-    orderBy: { name: 'asc' },
-  }); */
+export default async function AvailableEquipmentPage() {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    redirect('/api/auth/signin');
+  }
 
-  const equipment = [
-    {
-      id: 1,
-      name: 'Camera Kit',
-      image: '/images/equipment1.jpg',
-      campus: 'UH Manoa',
-      owner: 'John Doe',
-      posted: '1 day ago',
-      location: 'POST 309',
-      type: 'Electronics',
-    },
-    {
-      id: 2,
-      name: 'Graphing Calculator',
-      image: '/images/equipment2.jpg',
-      campus: 'Leeward CC',
-      owner: 'Jane Smith',
-      posted: '3 days ago',
-      location: 'PHYSCI 201',
-      type: 'General',
-    },
-    // Add more equipment objects as needed
-  ];
+  const prisma = new PrismaClient();
+  type EquipmentItem = {
+    id: string;
+    name: string;
+    type: string;
+    posted: string;
+    campus: string;
+    location: string;
+    image?: string;
+  };
+
+  let equipment: EquipmentItem[] = [];
+
+  try {
+    const fetchedEquipment = await prisma.resource.findMany({
+      where: { category: 'equipment' },
+      orderBy: { name: 'asc' },
+    });
+
+    equipment = fetchedEquipment.map((item) => ({
+      ...item,
+      id: item.id.toString(),
+    }));
+  } catch (error) {
+    console.error('Error fetching equipment resources:', error);
+  } finally {
+    await prisma.$disconnect();
+  }
 
   return (
     <Container fluid className="py-3">
@@ -62,7 +69,7 @@ const AvailableEquipment = async () => {
                   {/* Image */}
                   <div style={{ width: '100%', height: '250px', position: 'relative' }}>
                     <Image
-                      src={item.image}
+                      src={item.image || '/images/default-resource.jpg'}
                       alt={item.name}
                       fill
                       style={{
@@ -88,14 +95,13 @@ const AvailableEquipment = async () => {
                     </div>
                   </div>
 
-                  {/* Borrow / Return Button */}
+                  {/* Borrow Button */}
                   <div className="text-center bg-white py-2">
                     <Button
                       variant="secondary"
                       size="sm"
                       className="w-100 rounded-0"
                     >
-                      {/* Change this depending on page */}
                       Borrow
                     </Button>
                   </div>
@@ -107,6 +113,4 @@ const AvailableEquipment = async () => {
       </Row>
     </Container>
   );
-};
-
-export default AvailableEquipment;
+}
