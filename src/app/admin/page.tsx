@@ -69,9 +69,9 @@ const AdminPage = async () => {
                   style={{ objectFit: 'cover' }}
                 />
                 )}
-                <div className="mt-2 justify-content-center align-items-center">
+                <div className="mt-2">
                   <Link href={`/admin/resources/edit/${res.id}`} className="btn btn-primary">Edit</Link>
-                  <Link href={`/admin/resources/delete/${res.id}`} className="btn btn-danger">Delete</Link>
+                  <Link href={`/admin/resources/delete/${res.id}`} className="btn btn-danger ms-auto">Delete</Link>
                 </div>
               </div>
             ))}
