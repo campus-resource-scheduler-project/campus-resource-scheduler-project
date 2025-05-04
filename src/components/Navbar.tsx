@@ -30,10 +30,10 @@ const NavBar: React.FC = () => {
           <Nav id="navbar-options" className="ms-auto justify-content-end align-items-center">
             {currentUser
               ? [
-                  <Nav.Link id="add-stuff-nav" href="/" key="equipment" active={pathName === '/'}>
+                  <Nav.Link id="add-stuff-nav" href="/available-equipment" key="equipment" active={pathName === '/'}>
                     Equipment
                   </Nav.Link>,
-                  <Nav.Link id="list-stuff-nav" href="/" key="rooms" active={pathName === '/'}>
+                  <Nav.Link id="list-stuff-nav" href="/available-rooms" key="rooms" active={pathName === '/'}>
                     Rooms
                   </Nav.Link>,
                   <Nav.Link id="list-stuff-nav" href="/resources" key="your" active={pathName === '/resources'}>
