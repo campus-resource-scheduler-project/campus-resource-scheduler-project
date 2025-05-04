@@ -18,13 +18,6 @@ const AdminPage = async () => {
 
   return (
     <main>
-
-      <div className="text-center mt-4">
-        <Link href="/admin/resources/new">
-          <Button variant="success">Add New Resource</Button>
-        </Link>
-      </div>
-
       <Container fluid className="py-3">
         <h1>Resources</h1>
         <Row>
@@ -86,6 +79,13 @@ const AdminPage = async () => {
           </Col>
         </Row>
       </Container>
+
+      <div className="text-center mt-4">
+        <Link href="/admin/resources/new">
+          <Button variant="success">Add New Resource</Button>
+        </Link>
+      </div>
+
     </main>
   );
 };
