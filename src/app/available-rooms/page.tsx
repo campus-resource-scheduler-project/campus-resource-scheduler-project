@@ -1,38 +1,47 @@
+import { getServerSession } from 'next-auth/next';
+import { redirect } from 'next/navigation';
+import { PrismaClient } from '@prisma/client';
+import FilterSidebarRooms from '@/components/FilterSidebarRooms';
+import authOptions from '@/lib/authOptions';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import Image from 'next/image';
-import FilterSidebarRooms from '@/components/FilterSidebarRooms';
-// import { prisma } from '@/lib/prisma';
 
-const AvailableRooms = async () => {
-  // TODO: Replace with actual Prisma query once db setup is fixed
-  /* const rooms = await prisma.stuff.findMany({ where: { category: 'room' } });
-    where: { category: 'room' },
-    orderBy: { name: 'asc' },
-  });
-  */
-  const rooms = [
-    {
-      id: 1,
-      name: 'Room 101',
-      image: '/images/room1.jpg',
-      campus: 'UH Manoa',
-      owner: 'John Doe',
-      posted: '2 days ago',
-      location: 'Building A, Floor 1',
-      type: 'Study Room',
-    },
-    {
-      id: 2,
-      name: 'Room 102',
-      image: '/images/room2.jpg',
-      campus: 'UH West Oahu',
-      owner: 'Jane Smith',
-      posted: '5 days ago',
-      location: 'Building B, Floor 2',
-      type: 'Lab',
-    },
-    // Add more room objects as needed
-  ];
+export default async function AvailableRoomsPage() {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    redirect('/api/auth/signin');
+  }
+
+  const prisma = new PrismaClient();
+  type RoomItem = {
+    id: string;
+    name: string;
+    type: string;
+    posted: string;
+    campus: string;
+    location: string;
+    owner: string;
+    image?: string;
+  };
+
+  let rooms: RoomItem[] = [];
+
+  try {
+    const fetchedRooms = await prisma.resource.findMany({
+      where: { category: 'room' },
+      orderBy: { name: 'asc' },
+    });
+
+    rooms = fetchedRooms.map((room) => ({
+      ...room,
+      id: room.id.toString(),
+    }));
+  } catch (error) {
+    console.error('Error fetching room resources:', error);
+  } finally {
+    await prisma.$disconnect();
+  }
+
   return (
     <Container fluid className="py-3">
       <h2 className="mb-4">Available Rooms</h2>
@@ -60,7 +69,7 @@ const AvailableRooms = async () => {
                 <Card className="h-100 border-0">
                   <div style={{ width: '100%', height: '250px', position: 'relative' }}>
                     <Image
-                      src={room.image}
+                      src={room.image || '/images/default-resource.jpg'}
                       alt={room.name}
                       fill
                       style={{
@@ -102,6 +111,4 @@ const AvailableRooms = async () => {
       </Row>
     </Container>
   );
-};
-
-export default AvailableRooms;
+}
