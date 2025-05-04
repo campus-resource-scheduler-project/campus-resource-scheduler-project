@@ -1,5 +1,3 @@
-'use server';
-
 import OpenAI from 'openai';
 import { StreamingTextResponse } from 'ai';
 
@@ -7,7 +5,9 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-export default async function POST(req: Request) {
+export const runtime = 'edge';
+
+export async function POST(req: Request) {
   const { messages } = await req.json();
 
   const response = await openai.chat.completions.create({
