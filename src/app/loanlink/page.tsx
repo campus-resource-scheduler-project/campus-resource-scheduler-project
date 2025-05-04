@@ -10,7 +10,7 @@ export default function LoanLink() {
       {
         id: crypto.randomUUID(),
         role: 'user',
-        content: 'Hello! Ask me about resources that fit you!',
+        content: 'Hello! Ask me about resources that you might need!',
       },
     ],
   });
