@@ -30,7 +30,9 @@ const Home = async () => {
         <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
           <div className="text-center">
             <h1 style={{ color: 'black' }}>
-              Welcome to <b>Campus Resource Scheduler!</b>
+              Welcome to
+              {' '}
+              <b>Campus Resource Scheduler!</b>
             </h1>
             <div className="row justify-content-center align-items-center">
               <div className="col-auto mx-5 text-center">
@@ -58,7 +60,11 @@ const Home = async () => {
             </div>
             <div className="mt-5 text-center">
               <h1 style={{ color: 'black', fontSize: '24px' }}>
-                or try our <b>LoanLink</b> AI to help you find what you need.
+                or try our
+                {' '}
+                <b>LoanLink</b>
+                {' '}
+                AI to help you find what you need.
               </h1>
               <Button
                 size="lg"
@@ -138,26 +144,37 @@ const Home = async () => {
                     {isAdmin && (
                       <>
                         <small>
-                          <b>Owner:</b> {res.owner}
+                          <b>Owner:</b>
+                          {' '}
+                          {res.owner}
                         </small>
                         <br />
                       </>
                     )}
                     <small>
-                      <b>Type:</b> {res.type}
+                      <b>Type:</b>
+                      {' '}
+                      {res.type}
                     </small>
                     <br />
                     <small>
-                      <b>Location:</b> {res.location}
+                      <b>Location:</b>
+                      {' '}
+                      {res.location}
                     </small>
                     <br />
                     <small>
-                      <b>Campus:</b> {res.campus}
+                      <b>Campus:</b>
+                      {' '}
+                      {res.campus}
                     </small>
                   </p>
                 </div>
                 <div className="card-footer bg-secondary text-white text-center">
-                  <small>Posted: {res.posted}</small>
+                  <small>
+                    Posted:
+                    {res.posted}
+                  </small>
                 </div>
               </div>
             </div>
