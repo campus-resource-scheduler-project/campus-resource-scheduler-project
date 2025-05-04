@@ -28,7 +28,7 @@ const AdminPage = async () => {
       <Container fluid className="py-3">
         <h1>Resources</h1>
         <Row>
-          <Col className="d-flex flex-row align-items-center mx-2">
+          <Col className="d-flex flex-row align-items-center ms-4">
             {resources.map((res) => (
               <div key={res.id} className="border rounded p-3 mb-3" style={{ width: '250px' }}>
                 <h4>{res.name}</h4>
