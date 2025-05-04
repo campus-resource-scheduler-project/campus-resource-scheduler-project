@@ -2,7 +2,7 @@ import { getServerSession } from 'next-auth';
 import { prisma } from '@/lib/prisma';
 import authOptions from '@/lib/authOptions';
 import Image from 'next/image';
-import { Button } from 'react-bootstrap';
+import { Button, Card, Col, Container, Row } from 'react-bootstrap';
 
 /** The Home page. */
 const Home = async () => {
@@ -24,6 +24,7 @@ const Home = async () => {
     });
   }
 
+  // Not logged in view
   if (!isLoggedIn) {
     return (
       <main id="hasBG" style={{ overflowX: 'hidden' }}>
@@ -82,45 +83,102 @@ const Home = async () => {
     );
   }
 
+  // Admin view
+  if (isAdmin) {
+    return (
+      <main id="hasBG" style={{ overflowX: 'hidden' }}>
+        <div style={{ backgroundColor: '#363636', color: 'white', padding: '4rem 1rem' }}>
+          <Container>
+            <Row className="mb-4 text-center">
+              <Col>
+                <h2 className="fw-bold mb-3">All Resources (Admin View)</h2>
+                <p className="lead" style={{ maxWidth: '700px', margin: '0 auto' }}>
+                  As an admin, you can view and manage all resources in the system.
+                </p>
+              </Col>
+            </Row>
+
+            <Row className="g-4 justify-content-center">
+              {resources.map((res) => (
+                <Col key={res.id} xs={12} sm={6} md={4} lg={3}>
+                  <Card className="h-100 shadow-sm border-0">
+                    <div style={{ height: '160px', position: 'relative' }}>
+                      <Image
+                        src={res.image || '/images/default-resource.jpg'}
+                        alt={res.name}
+                        fill
+                        style={{ objectFit: 'cover', borderTopLeftRadius: '0.375rem', borderTopRightRadius: '0.375rem' }}
+                      />
+                    </div>
+                    <Card.Body className="bg-white text-dark">
+                      <Card.Title>{res.name}</Card.Title>
+                      <Card.Text>
+                        <small>
+                          <b>Owner:</b>
+                          {' '}
+                          {res.owner}
+                        </small>
+                        <br />
+                        <small>
+                          <b>Type:</b>
+                          {' '}
+                          {res.type}
+                        </small>
+                        <br />
+                        <small>
+                          <b>Location:</b>
+                          {' '}
+                          {res.location}
+                        </small>
+                        <br />
+                        <small>
+                          <b>Campus:</b>
+                          {' '}
+                          {res.campus}
+                        </small>
+                      </Card.Text>
+                    </Card.Body>
+                    <Card.Footer className="bg-secondary text-white text-center">
+                      <small>
+                        Posted:
+                        {res.posted}
+                      </small>
+                    </Card.Footer>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+          </Container>
+        </div>
+      </main>
+    );
+  }
+
+  // John or other logged-in user view
   return (
     <main id="hasBG" style={{ overflowX: 'hidden', minHeight: '100vh', padding: '2rem' }}>
       <div className="container py-5">
-        {isAdmin && (
-          <div className="row mb-4 text-center">
-            <div className="col">
-              <h2 className="fw-bold mb-3" style={{ color: 'black' }}>All Resources (Admin View)</h2>
-              <p className="lead" style={{ maxWidth: '700px', margin: '0 auto', color: 'black' }}>
-                As an admin, you can view and manage all resources in the system.
-              </p>
-            </div>
+        <div className="row mb-5 text-center">
+          <div className="col">
+            <h2 className="fw-bold mb-3" style={{ color: 'black' }}>How To Use The Scheduler</h2>
+            <p className="lead" style={{ maxWidth: '800px', margin: '0 auto', color: 'black' }}>
+              Browse and reserve equipment through the Equipment tab, book study rooms via the Rooms tab,
+              manage your current reservations in Your Resources, and get personalized recommendations
+              using our LoanLink AI assistant.
+            </p>
           </div>
-        )}
+        </div>
 
-        {isJohn && (
-          <>
-            <div className="row mb-5 text-center">
-              <div className="col">
-                <h2 className="fw-bold mb-3" style={{ color: 'black' }}>How To Use The Scheduler</h2>
-                <p className="lead" style={{ maxWidth: '800px', margin: '0 auto', color: 'black' }}>
-                  Browse and reserve equipment through the Equipment tab, book study rooms via the Rooms tab,
-                  manage your current reservations in Your Resources, and get personalized recommendations
-                  using our LoanLink AI assistant.
-                </p>
-              </div>
-            </div>
-
-            <div className="row mb-4 text-center">
-              <div className="col">
-                <h2 className="fw-bold mb-3" style={{ color: 'black' }}>Recently Available Resources</h2>
-                <p className="lead" style={{ maxWidth: '700px', margin: '0 auto', color: 'black' }}>
-                  Browse a selection of the most recently posted rooms, equipment, and tools on campus.
-                  These resources are available now, and you can borrow them directly by clicking one of
-                  the options below or exploring further on our Borrow Equipment Tab.
-                </p>
-              </div>
-            </div>
-          </>
-        )}
+        <div className="row mb-4 text-center">
+          <div className="col">
+            <h2 className="fw-bold mb-3" style={{ color: 'black' }}>Recently Available Resources</h2>
+            <p className="lead" style={{ maxWidth: '700px', margin: '0 auto', color: 'black' }}>
+              Browse a selection of the most recently posted rooms, equipment, and tools on campus.
+              These resources are available now, and you can borrow them directly by clicking one of
+              the options below or exploring further on our Borrow Equipment Tab.
+            </p>
+          </div>
+        </div>
 
         <div className="row g-4 justify-content-center">
           {resources.map((res) => (
@@ -141,16 +199,6 @@ const Home = async () => {
                 <div className="card-body bg-white text-dark">
                   <h5 className="card-title">{res.name}</h5>
                   <p className="card-text">
-                    {isAdmin && (
-                      <>
-                        <small>
-                          <b>Owner:</b>
-                          {' '}
-                          {res.owner}
-                        </small>
-                        <br />
-                      </>
-                    )}
                     <small>
                       <b>Type:</b>
                       {' '}
