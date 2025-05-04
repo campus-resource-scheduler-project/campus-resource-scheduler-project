@@ -29,7 +29,9 @@ const Home = async () => {
         <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
           <div className="text-center">
             <h1 style={{ color: 'black' }}>
-              Welcome to <b>Campus Resource Scheduler!</b>
+              Welcome to
+              {' '}
+              <b>Campus Resource Scheduler!</b>
             </h1>
             <div className="row justify-content-center align-items-center">
               <div className="col-auto mx-5 text-center">
@@ -53,7 +55,11 @@ const Home = async () => {
             </div>
             <div className="mt-5 text-center">
               <h1 style={{ color: 'black', fontSize: '24px' }}>
-                or try our <b>LoanLink</b> AI to help you find what you need.
+                or try our
+                {' '}
+                <b>LoanLink</b>
+                {' '}
+                AI to help you find what you need.
               </h1>
               <a
                 className="btn btn-lg mt-2 rounded-0"
@@ -89,8 +95,8 @@ const Home = async () => {
               <div className="col">
                 <h2 className="fw-bold mb-3" style={{ color: 'black' }}>How To Use The Scheduler</h2>
                 <p className="lead" style={{ maxWidth: '800px', margin: '0 auto', color: 'black' }}>
-                  Browse and reserve equipment through the Equipment tab, book study rooms via the Rooms tab, 
-                  manage your current reservations in Your Resources, and get personalized recommendations 
+                  Browse and reserve equipment through the Equipment tab, book study rooms via the Rooms tab,
+                  manage your current reservations in Your Resources, and get personalized recommendations
                   using our LoanLink AI assistant.
                 </p>
               </div>
@@ -100,8 +106,8 @@ const Home = async () => {
               <div className="col">
                 <h2 className="fw-bold mb-3" style={{ color: 'black' }}>Recently Available Resources</h2>
                 <p className="lead" style={{ maxWidth: '700px', margin: '0 auto', color: 'black' }}>
-                  Browse a selection of the most recently posted rooms, equipment, and tools on campus. 
-                  These resources are available now, and you can borrow them directly by clicking one of 
+                  Browse a selection of the most recently posted rooms, equipment, and tools on campus.
+                  These resources are available now, and you can borrow them directly by clicking one of
                   the options below or exploring further on our Borrow Equipment Tab.
                 </p>
               </div>
@@ -128,13 +134,30 @@ const Home = async () => {
                 <div className="card-body bg-white text-dark">
                   <h5 className="card-title">{res.name}</h5>
                   <p className="card-text">
-                    <small><b>Type:</b> {res.type}</small><br />
-                    <small><b>Location:</b> {res.location}</small><br />
-                    <small><b>Campus:</b> {res.campus}</small>
+                    <small>
+                      <b>Type:</b>
+                      {' '}
+                      {res.type}
+                    </small>
+                    <br />
+                    <small>
+                      <b>Location:</b>
+                      {' '}
+                      {res.location}
+                    </small>
+                    <br />
+                    <small>
+                      <b>Campus:</b>
+                      {' '}
+                      {res.campus}
+                    </small>
                   </p>
                 </div>
                 <div className="card-footer bg-secondary text-white text-center">
-                  <small>Posted: {res.posted}</small>
+                  <small>
+                    Posted:
+                    {res.posted}
+                  </small>
                 </div>
               </div>
             </div>

@@ -34,7 +34,7 @@ async function main() {
           personal: account.personal || '',
         },
       });
-    })
+    }),
   );
 
   // Create resources
