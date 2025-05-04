@@ -3,7 +3,6 @@ import { redirect } from 'next/navigation';
 import { PrismaClient, Resource } from '@prisma/client';
 import YourResources from '@/components/YourResources';
 import authOptions from '@/lib/authOptions';
-
 // Server component for resources page
 export default async function ResourcesPage() {
   const session = await getServerSession(authOptions);

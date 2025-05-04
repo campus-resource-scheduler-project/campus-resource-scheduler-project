@@ -7,32 +7,39 @@ const prisma = new PrismaClient();
 
 async function main() {
   console.log('Seeding the database');
+
   const password = await hash('changeme', 10);
-  config.defaultAccounts.forEach(async (account) => {
-    const role = account.role as Role || Role.USER;
-    console.log(`  Creating user: ${account.email} with role: ${role}`);
-    await prisma.user.upsert({
-      where: { email: account.email },
-      update: {},
-      create: {
-        email: account.email,
-        password,
-        role,
-        name: account.name,
-        image: account.image,
-        occupation: account.occupation,
-        bio: account.bio,
-        major: account.major,
-        standing: account.standing,
-        campus: account.campus,
-        phone: account.phone,
-        personal: account.personal,
-      },
-    });
-    // console.log(`  Created user: ${user.email} with role: ${user.role}`);
-  });
+
+  // Create users from config
+  await Promise.all(
+    config.defaultAccounts.map(async (account) => {
+      const role = (account.role as Role) || Role.USER;
+      console.log(`  Creating user: ${account.email} with role: ${role}`);
+
+      await prisma.user.upsert({
+        where: { email: account.email },
+        update: {},
+        create: {
+          email: account.email,
+          password,
+          role,
+          name: account.name || '',
+          image: account.image || '',
+          occupation: account.occupation || '',
+          bio: account.bio || '',
+          major: account.major || '',
+          standing: account.standing || '',
+          campus: account.campus || '',
+          phone: account.phone || '',
+          personal: account.personal || '',
+        },
+      });
+    })
+  );
+
+  // Create resources
   for (const resource of config.defaultResources) {
-    console.log(`  Adding resource: ${JSON.stringify(resource.name)}`);
+    console.log(`  Adding resource: ${resource.name}`);
     await prisma.resource.upsert({
       where: { id: config.defaultResources.indexOf(resource) + 1 },
       update: {},
@@ -49,10 +56,11 @@ async function main() {
       },
     });
   }
+
+  // Create stuff entries
   for (const data of config.defaultData) {
-    const condition = data.condition as Condition || Condition.good;
-    console.log(`  Adding stuff: ${JSON.stringify(data)}`);
-    // eslint-disable-next-line no-await-in-loop
+    const condition = (data.condition as Condition) || Condition.good;
+    console.log(`  Adding stuff: ${data.name}`);
     await prisma.stuff.upsert({
       where: { id: config.defaultData.indexOf(data) + 1 },
       update: {},
@@ -65,6 +73,7 @@ async function main() {
     });
   }
 }
+
 main()
   .then(() => prisma.$disconnect())
   .catch(async (e) => {

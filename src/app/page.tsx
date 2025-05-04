@@ -5,8 +5,6 @@
 import { Button, Card, Col, Container, Row } from 'react-bootstrap';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
-import { useEffect, useState } from 'react';
-import { PrismaClient, Resource } from '@prisma/client';
 
 /** The Home page. */
 const Home = () => {
@@ -15,26 +13,48 @@ const Home = () => {
   const isJohn = session?.user?.email === 'john@foo.com';
   const isLoggedIn = isAdmin || isJohn;
 
-	if (isLoggedIn) {
-  	fetchResources();
-	}
-  }, [isLoggedIn]);
+  const mockResources = [
+    {
+      id: 1,
+      name: 'Camera Tripod',
+      type: 'Equipment',
+      location: 'Media Room 3',
+      campus: 'UH Mānoa',
+      postedDate: 'Posted April 21, 2025',
+      imageUrl: '/images/default-resource.jpg',
+    },
+    {
+      id: 2,
+      name: 'Study Room A',
+      type: 'Room',
+      location: 'Hamilton Library 2nd Floor',
+      campus: 'UH Mānoa',
+      postedDate: 'Posted April 20, 2025',
+      imageUrl: '/images/default-resource.jpg',
+    },
+    {
+      id: 3,
+      name: 'Microscope',
+      type: 'Lab Equipment',
+      location: 'Bilger Hall 112',
+      campus: 'UH Mānoa',
+      postedDate: 'Posted April 18, 2025',
+      imageUrl: '/images/default-resource.jpg',
+    },
+  ];
 
-  if (loading && isLoggedIn) {
-	return (
-  	<main id="hasBG" style={{ overflowX: 'hidden', minHeight: '100vh' }}>
-    	<Container className="py-5">
-      	<Row className="justify-content-center">
-        	<Col className="text-center">
-          	<div className="spinner-border text-primary" role="status">
-            	<span className="visually-hidden">Loading...</span>
-          	</div>
-        	</Col>
-      	</Row>
-    	</Container>
-  	</main>
-	);
-  }
+  const adminResources = [
+    ...mockResources,
+    {
+      id: 4,
+      name: 'Admin Resource',
+      type: 'Special Equipment',
+      location: 'Admin Office',
+      campus: 'UH Mānoa',
+      postedDate: 'Posted April 25, 2025',
+      imageUrl: '/images/default-resource.jpg',
+    },
+  ];
 
   // Admin-specific content
   if (isAdmin) {
