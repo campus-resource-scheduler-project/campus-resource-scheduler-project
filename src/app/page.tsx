@@ -182,7 +182,7 @@ const Home = () => {
                 size="lg"
                 id="landing-button"
                 className="mt-2 rounded-0"
-                href="/"
+                href="/available-rooms"
                 style={{ backgroundColor: '#363636', border: 'none' }}
               >
                 <b>Borrow Rooms</b>
