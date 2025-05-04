@@ -11,7 +11,7 @@ export default function LoanLink() {
     initialMessages: [
       {
         id: crypto.randomUUID(),
-        role: 'Loanlink',
+        role: 'assistant',
         content: 'Hello! Ask me about resources that you might want to borrow!',
       },
     ],
@@ -27,7 +27,7 @@ export default function LoanLink() {
               <div
                 key={message.id}
                 className={`p-2 rounded-lg ${
-                  message.role === 'User' ? 'bg-blue-100' : 'bg-gray-100'
+                  message.role === 'user' ? 'bg-blue-100' : 'bg-gray-100'
                 }`}
                 style={{ color: 'white', fontSize: '1.2rem', fontWeight: '550' }}
               >
