@@ -30,7 +30,7 @@ const AdminPage = async () => {
           <Col>
             <h1>Resources</h1>
             {resources.map((res) => (
-              <div key={res.id} className="border rounded p-3 mb-3" style={{ width: '50px' }}>
+              <div key={res.id} className="border rounded p-3 mb-3" style={{ width: '500px' }}>
                 <h4>{res.name}</h4>
                 <p>
                   <strong>Owner:</strong>
