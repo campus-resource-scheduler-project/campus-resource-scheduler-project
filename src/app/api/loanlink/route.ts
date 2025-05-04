@@ -1,3 +1,5 @@
+'use server';
+
 import OpenAI from 'openai';
 import { StreamingTextResponse } from 'ai';
 
