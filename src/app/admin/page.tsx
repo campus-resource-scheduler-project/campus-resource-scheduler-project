@@ -30,7 +30,7 @@ const AdminPage = async () => {
         <Row>
           <Col className="d-flex flex-row align-items-center ms-4">
             {resources.map((res) => (
-              <div key={res.id} className="border rounded p-3 mb-3" style={{ width: '250px' }}>
+              <div key={res.id} className="border rounded p-3 mb-3 ms-4" style={{ width: '250px' }}>
                 <h4>{res.name}</h4>
                 <p>
                   <strong>Owner:</strong>
@@ -77,7 +77,7 @@ const AdminPage = async () => {
                 />
                 )}
                 <div className="mt-2">
-                  <Link href={`/admin/resources/edit/${res.id}`} className="btn btn-primary me-2">Edit</Link>
+                  <Link href={`/admin/resources/edit/${res.id}`} className="btn btn-primary ms-2 me-2">Edit</Link>
                   <Link href={`/admin/resources/delete/${res.id}`} className="btn btn-danger">Delete</Link>
                 </div>
               </div>
