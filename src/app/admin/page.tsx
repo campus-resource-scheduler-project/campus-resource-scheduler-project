@@ -70,7 +70,7 @@ const AdminPage = async () => {
                 />
                 )}
                 <div className="mt-2">
-                  <Link href={`/admin/resources/edit/${res.id}`} className="btn btn-primary ms-2 me-6">Edit</Link>
+                  <Link href={`/admin/resources/edit/${res.id}`} className="btn btn-primary ms-4 me-2">Edit</Link>
                   <Link href={`/admin/resources/delete/${res.id}`} className="btn btn-danger">Delete</Link>
                 </div>
               </div>
