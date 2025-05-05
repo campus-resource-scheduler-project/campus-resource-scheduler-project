@@ -171,7 +171,7 @@ const Home = () => {
                 size="lg"
                 id="landing-button"
                 className="mt-2 rounded-0"
-                href="/"
+                href="/available-equipment"
                 style={{ backgroundColor: '#363636', border: 'none' }}
               >
                 <b>Borrow Equipment</b>
