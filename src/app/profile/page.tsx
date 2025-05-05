@@ -80,11 +80,8 @@ export default async function ProfilePage() {
               <Globe id="account-icons" />
             </h6>
           </Row>
-          <Row id="profile-box" style={{ backgroundColor: 'white', height: '61%' }}>
-            <h3><b>Your Resources</b></h3>
-            <Row style={{ maxWidth: '100%', overflow: 'scroll' }}>
-              <YourResources initialResources={resources} />
-            </Row>
+          <Row id="profile-box" style={{ backgroundColor: 'white', height: '61%', maxWidth: '100%', overflow: 'scroll' }}>
+            <YourResources initialResources={resources} />
           </Row>
         </Col>
         <Col style={{ float: 'left', width: '40%' }}>
