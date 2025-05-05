@@ -27,7 +27,7 @@ export default async function AvailableEquipmentPage() {
 
   try {
     const fetchedEquipment = await prisma.resource.findMany({
-      where: { category: 'physical' },
+      where: { type: 'physical' },
       orderBy: { name: 'asc' },
     });
 

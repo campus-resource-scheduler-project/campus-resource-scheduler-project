@@ -29,7 +29,7 @@ export default async function AvailableRoomsPage() {
 
   try {
     const fetchedRooms = await prisma.resource.findMany({
-      where: { category: 'room' },
+      where: { type: 'room' },
       orderBy: { name: 'asc' },
     });
 
