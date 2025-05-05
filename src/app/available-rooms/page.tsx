@@ -44,7 +44,7 @@ export default async function AvailableRoomsPage() {
   }
 
   return (
-    <Container fluid className="py-3" id="hasBG" style={{ display: 'flex', flexDirection: 'row', height: '100%', overflow: 'hidden' }}>
+    <Container fluid className="py-3" id="hasBG" style={{ height: '100%' }}>
       <h2 className="mb-4">Available Rooms</h2>
       <Row>
         {/* Left Sidebar */}

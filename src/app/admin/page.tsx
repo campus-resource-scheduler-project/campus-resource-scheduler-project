@@ -19,12 +19,12 @@ const AdminPage = async () => {
 
   return (
     <main>
-      <Container fluid className="py-3" id="hasBG" style={{ display: 'flex', flexDirection: 'row', height: '100%', overflow: 'hidden' }}>
+      <Container fluid className="py-3" id="hasBG" style={{ height: '100%', overflow: 'hidden' }}>
         <h1>Resources</h1>
         <Row style={{ maxWidth: '100%', overflow: 'scroll' }}>
           <Col className="d-flex flex-row align-items-center ms-4">
             {resources.map((res) => (
-              <div key={res.id} className="border rounded p-3 mb-3 ms-4" style={{ width: '250px' }}>
+              <div key={res.id} className="border rounded p-3 mb-3 ms-4" style={{ width: '250px', backgroundColor: 'white' }}>
                 <h4>{res.name}</h4>
                 <p>
                   <strong>Owner:</strong>
