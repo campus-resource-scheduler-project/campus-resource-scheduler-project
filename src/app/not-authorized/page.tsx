@@ -3,7 +3,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 /** Render a Not Authorized page if the user enters a URL that they don't have authorization for. */
 const NotAuthorized = () => (
   <main>
-    <Container className="py-3">
+    <Container className="py-3" id="hasBG" style={{ height: '100%', overflow: 'hidden' }}>
       <Row className="justify-content-center">
         <Col xs={4} className="text-center">
           <h2>
