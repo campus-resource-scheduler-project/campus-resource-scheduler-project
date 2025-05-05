@@ -76,16 +76,14 @@ const AdminPage = async () => {
                 </div>
               </div>
             ))}
-
           </Col>
         </Row>
+        <Row className="text-center mt-4 pb-3">
+          <Link href="/admin/resources/new">
+            <Button variant="success">Add New Resource</Button>
+          </Link>
+        </Row>
       </Container>
-
-      <div className="text-center mt-4 pb-3">
-        <Link href="/admin/resources/new">
-          <Button variant="success">Add New Resource</Button>
-        </Link>
-      </div>
 
     </main>
   );
