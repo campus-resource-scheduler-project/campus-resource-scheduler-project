@@ -1,10 +1,12 @@
 /* eslint-disable max-len */
 import { Col, Container, Row, Image, Button } from 'react-bootstrap';
 import { PencilSquare, Instagram, Linkedin, Facebook, Github, TwitterX, Globe } from 'react-bootstrap-icons';
-import { getServerSession } from 'next-auth';
 import authOptions from '@/lib/authOptions';
 import { loggedInProtectedPage } from '@/lib/page-protection';
 import { prisma } from '@/lib/prisma';
+import { getServerSession } from 'next-auth/next';
+import { Resource } from '@prisma/client';
+import YourResources from '@/components/YourResources';
 
 export default async function ProfilePage() {
   const session = await getServerSession(authOptions);
@@ -29,6 +31,21 @@ export default async function ProfilePage() {
       personal: true,
     },
   });
+    // Get resources for this user from database
+  let resources: Resource[] = [];
+
+  try {
+    resources = await prisma.resource.findMany({
+      where: {
+        ...(owner ? { owner: (session && session.user && session.user.email) || '' } : {}),
+      },
+    });
+  } catch (error) {
+    console.error('Error fetching resources:', error);
+  } finally {
+    await prisma.$disconnect();
+  }
+
   return (
     <main id="hasBG" style={{ display: 'flex', flexDirection: 'row', height: '100%', overflow: 'hidden' }}>
       <Container className="py-3">
@@ -65,6 +82,9 @@ export default async function ProfilePage() {
           </Row>
           <Row id="profile-box" style={{ backgroundColor: 'white', height: '61%' }}>
             <h3><b>Your Resources</b></h3>
+            <Row style={{ maxWidth: '100%', overflow: 'scroll' }}>
+              <YourResources initialResources={resources} />
+            </Row>
           </Row>
         </Col>
         <Col style={{ float: 'left', width: '40%' }}>
