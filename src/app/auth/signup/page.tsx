@@ -45,7 +45,7 @@ const SignUp = () => {
 
   return (
     <main>
-      <Container id="hasBG" style={{ height: '100%', overflow: 'hidden' }}>
+      <Container id="hasBG" style={{ height: '100vh', overflow: 'hidden', minWidth: '100vw' }}>
         <Row className="justify-content-center">
           <Col xs={5}>
             <h1 className="text-center">Sign Up</h1>

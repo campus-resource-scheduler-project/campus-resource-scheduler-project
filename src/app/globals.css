@@ -12,6 +12,16 @@ main{
     background-size: cover;
 }
 
+#signOut{
+  --bs-dark: var(var(--nat-navbar-bg));
+  --bs-dark-rgb: var(--nat-navbar-bg-rgb);
+  box-sizing: border-box;
+  width: 100%;
+  background: fixed center url('/hamilton-library-bg.png');
+  background-size: cover;
+
+}
+
 #landing-button{
   width: 275px !important;
 }
