@@ -20,7 +20,7 @@ const AdminPage = async () => {
     <main>
       <Container fluid className="py-3">
         <h1>Resources</h1>
-        <Row style={{ maxWidth: '100%', overflow:'auto' }}>
+        <Row style={{ maxWidth: '100%', overflow: 'scroll' }}>
           <Col className="d-flex flex-row align-items-center ms-4">
             {resources.map((res) => (
               <div key={res.id} className="border rounded p-3 mb-3 ms-4" style={{ width: '250px' }}>
