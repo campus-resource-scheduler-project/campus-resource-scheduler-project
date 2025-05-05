@@ -1,7 +1,3 @@
-/* eslint-disable @next/next/no-async-client-component */
-
-'use server';
-
 import { getServerSession } from 'next-auth';
 import { prisma } from '@/lib/prisma';
 import authOptions from '@/lib/authOptions';

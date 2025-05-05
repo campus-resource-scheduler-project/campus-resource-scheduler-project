@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { getServerSession } from 'next-auth';
 import { Col, Container, Row, Button } from 'react-bootstrap';
 import { prisma } from '@/lib/prisma';
@@ -18,7 +19,7 @@ const AdminPage = async () => {
 
   return (
     <main>
-      <Container fluid className="py-3">
+      <Container fluid className="py-3" id="hasBG" style={{ display: 'flex', flexDirection: 'row', height: '100%', overflow: 'hidden' }}>
         <h1>Resources</h1>
         <Row style={{ maxWidth: '100%', overflow: 'scroll' }}>
           <Col className="d-flex flex-row align-items-center ms-4">
