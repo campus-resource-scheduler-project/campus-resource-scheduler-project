@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import Image from 'next/image';
 import FilterSidebarEquipment from '@/components/FilterSidebarEquipment';
@@ -14,20 +15,31 @@ type EquipmentItem = {
   location: string;
   image?: string;
   posted: string;
+  owner: string;
 };
 
 export default function AvailableEquipmentPage() {
+  const { data: session, status } = useSession();
   const [equipment, setEquipment] = useState<EquipmentItem[]>([]);
   const [filters, setFilters] = useState({ category: '', campus: '' });
 
   useEffect(() => {
     async function fetchEquipment() {
-      const res = await fetch('/api/equipment'); // Replace with your real API endpoint
+      const res = await fetch('/api/equipment');
       const data = await res.json();
-      setEquipment(data.filter((item: { owner: string; }) => item.owner === 'admin@foo.com'));
+
+      const currentUserEmail = session?.user?.email?.toLowerCase() ?? '';
+      const ownedResources = data.filter(
+        (item: EquipmentItem) => item.owner.toLowerCase() === currentUserEmail,
+      );
+
+      setEquipment(ownedResources);
     }
-    fetchEquipment();
-  }, []);
+
+    if (status === 'authenticated') {
+      fetchEquipment();
+    }
+  }, [session, status]);
 
   const filteredEquipment = equipment.filter((item) => {
     const matchesCategory = filters.category === '' || item.category === filters.category;
@@ -39,10 +51,15 @@ export default function AvailableEquipmentPage() {
     <Container fluid className="py-3">
       <h2 className="mb-4">Available Equipment</h2>
       <Row>
-        {/* Filter Sidebar */}
         <Col md={3}>
           <FilterSidebarEquipment
-            categoryOptions={['General', 'Electronics', 'Books', 'Stationery', 'Equipment']}
+            categoryOptions={[
+              'General',
+              'Electronics',
+              'Books',
+              'Stationery',
+              'Equipment',
+            ]}
             campusOptions={[
               'UH Manoa',
               'UH West Oahu',
@@ -57,7 +74,6 @@ export default function AvailableEquipmentPage() {
           />
         </Col>
 
-        {/* Equipment Cards */}
         <Col md={9}>
           <Row className="g-3">
             {filteredEquipment.map((item) => (

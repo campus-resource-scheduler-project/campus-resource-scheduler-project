@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import Image from 'next/image';
 import FilterSidebarRooms from '@/components/FilterSidebarRooms';
@@ -14,20 +15,31 @@ type RoomItem = {
   location: string;
   image?: string;
   posted: string;
+  owner: string;
 };
 
 export default function AvailableRoomsPage() {
+  const { data: session, status } = useSession();
   const [rooms, setRooms] = useState<RoomItem[]>([]);
   const [filters, setFilters] = useState({ category: '', campus: '' });
 
   useEffect(() => {
     async function fetchRooms() {
-      const res = await fetch('/api/rooms'); // Replace with your real API route or loader
+      const res = await fetch('/api/rooms');
       const data = await res.json();
-      setRooms(data.filter((item: { owner: string; }) => item.owner === 'admin@foo.com'));
+
+      const currentUserEmail = session?.user?.email?.toLowerCase() ?? '';
+      const ownedResources = data.filter(
+        (item: RoomItem) => item.owner.toLowerCase() === currentUserEmail,
+      );
+
+      setRooms(ownedResources);
     }
-    fetchRooms();
-  }, []);
+
+    if (status === 'authenticated') {
+      fetchRooms();
+    }
+  }, [session, status]);
 
   const filteredRooms = rooms.filter((room) => {
     const matchesCategory = filters.category === '' || room.category === filters.category;
@@ -39,7 +51,6 @@ export default function AvailableRoomsPage() {
     <Container fluid className="py-3">
       <h2 className="mb-4">Available Rooms</h2>
       <Row>
-        {/* Filter Sidebar */}
         <Col md={3}>
           <FilterSidebarRooms
             categoryOptions={['Study', 'Lab', 'Meeting']}
@@ -57,7 +68,6 @@ export default function AvailableRoomsPage() {
           />
         </Col>
 
-        {/* Room Cards */}
         <Col md={9}>
           <Row className="g-3">
             {filteredRooms.map((room) => (
