@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useSession } from 'next-auth/react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import Image from 'next/image';
 import FilterSidebarEquipment from '@/components/FilterSidebarEquipment';
@@ -19,7 +18,6 @@ type EquipmentItem = {
 };
 
 export default function AvailableEquipmentPage() {
-  const { data: session, status } = useSession();
   const [equipment, setEquipment] = useState<EquipmentItem[]>([]);
   const [filters, setFilters] = useState({ category: '', campus: '' });
 
@@ -29,31 +27,16 @@ export default function AvailableEquipmentPage() {
         const res = await fetch('/api/equipment');
         const data = await res.json();
 
-        const currentUserEmail = session?.user?.email?.toLowerCase() ?? '';
-        console.log('Logged in as:', currentUserEmail);
-        console.log('Fetched data:', data);
+        console.log('Fetched equipment:', data);
 
-        if (!currentUserEmail) {
-          console.warn('No user email found in session.');
-          setEquipment([]);
-          return;
-        }
-
-        const ownedResources = data.filter(
-          (item: EquipmentItem) => item.owner?.toLowerCase?.() === currentUserEmail,
-        );
-
-        console.log('Owned resources:', ownedResources);
-        setEquipment(ownedResources);
+        setEquipment(data);
       } catch (error) {
         console.error('Error fetching equipment:', error);
       }
     }
 
-    if (status === 'authenticated') {
-      fetchEquipment();
-    }
-  }, [session, status]);
+    fetchEquipment(); // skip session for now
+  }, []);
 
   const filteredEquipment = equipment.filter((item) => {
     const matchesCategory = filters.category === '' || item.category === filters.category;

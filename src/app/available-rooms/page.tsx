@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useSession } from 'next-auth/react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import Image from 'next/image';
 import FilterSidebarRooms from '@/components/FilterSidebarRooms';
@@ -19,7 +18,6 @@ type RoomItem = {
 };
 
 export default function AvailableRoomsPage() {
-  const { data: session, status } = useSession();
   const [rooms, setRooms] = useState<RoomItem[]>([]);
   const [filters, setFilters] = useState({ category: '', campus: '' });
 
@@ -29,31 +27,24 @@ export default function AvailableRoomsPage() {
         const res = await fetch('/api/rooms');
         const data = await res.json();
 
-        const currentUserEmail = session?.user?.email?.toLowerCase() ?? '';
-        console.log('Logged in as:', currentUserEmail);
-        console.log('Fetched room data:', data);
+        console.log('Fetched rooms:', data); // Confirm data structure
 
-        if (!currentUserEmail) {
-          console.warn('No user email found in session.');
-          setRooms([]);
-          return;
-        }
+        // TEMPORARY: show all rooms without filtering
+        setRooms(data);
 
-        const ownedResources = data.filter(
-          (item: RoomItem) => item.owner?.toLowerCase?.() === currentUserEmail,
-        );
-
-        console.log('Owned rooms:', ownedResources);
-        setRooms(ownedResources);
+        // ✅ Later, reintroduce filtering when confirmed working:
+        // const currentUserEmail = session?.user?.email?.toLowerCase() ?? '';
+        // const ownedRooms = data.filter(
+        //   (room: RoomItem) => room.owner?.toLowerCase?.() === currentUserEmail
+        // );
+        // setRooms(ownedRooms);
       } catch (error) {
         console.error('Error fetching rooms:', error);
       }
     }
 
-    if (status === 'authenticated') {
-      fetchRooms();
-    }
-  }, [session, status]);
+    fetchRooms();
+  }, []);
 
   const filteredRooms = rooms.filter((room) => {
     const matchesCategory = filters.category === '' || room.category === filters.category;
