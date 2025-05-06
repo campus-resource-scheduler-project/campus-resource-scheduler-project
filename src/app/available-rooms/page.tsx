@@ -47,7 +47,7 @@ export default function AvailableRoomsPage() {
   }, []);
 
   const filteredRooms = rooms.filter((room) => {
-    const matchesCategory = filters.category === '' || room.category === filters.category;
+    const matchesCategory = filters.category === '' || room.category.toLowerCase() === filters.category.toLowerCase();
     const matchesCampus = filters.campus === '' || room.campus === filters.campus;
     return matchesCategory && matchesCampus;
   });

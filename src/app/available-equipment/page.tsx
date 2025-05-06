@@ -39,7 +39,7 @@ export default function AvailableEquipmentPage() {
   }, []);
 
   const filteredEquipment = equipment.filter((item) => {
-    const matchesCategory = filters.category === '' || item.category === filters.category;
+    const matchesCategory = filters.category === '' || item.category.toLowerCase() === filters.category.toLowerCase();
     const matchesCampus = filters.campus === '' || item.campus === filters.campus;
     return matchesCategory && matchesCampus;
   });
