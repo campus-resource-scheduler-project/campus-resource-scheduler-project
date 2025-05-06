@@ -1,19 +1,20 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+/* eslint-disable import/prefer-default-export */
+import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export async function GET() {
   try {
     const equipment = await prisma.resource.findMany({
       where: { type: 'physical' },
       orderBy: { name: 'asc' },
     });
 
-    res.status(200).json(equipment);
+    return NextResponse.json(equipment);
   } catch (error) {
     console.error('Failed to fetch equipment:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    return new NextResponse('Internal Server Error', { status: 500 });
   } finally {
     await prisma.$disconnect();
   }
