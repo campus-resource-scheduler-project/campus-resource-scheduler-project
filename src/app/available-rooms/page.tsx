@@ -30,7 +30,7 @@ export default function AvailableRoomsPage() {
         console.log('Fetched rooms:', data); // Confirm data structure
 
         // TEMPORARY: show all rooms without filtering
-        setRooms(data);
+        setRooms(data.filter((room: RoomItem) => room.owner.toLowerCase() === 'admin@foo.com'));
 
         // ✅ Later, reintroduce filtering when confirmed working:
         // const currentUserEmail = session?.user?.email?.toLowerCase() ?? '';

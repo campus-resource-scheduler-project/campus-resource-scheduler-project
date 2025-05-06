@@ -29,7 +29,8 @@ export default function AvailableEquipmentPage() {
 
         console.log('Fetched equipment:', data);
 
-        setEquipment(data);
+        // TEMPORARY: show all equipment without filtering
+        setEquipment(data.filter((item: EquipmentItem) => item.owner.toLowerCase() === 'admin@foo.com'));
       } catch (error) {
         console.error('Error fetching equipment:', error);
       }
