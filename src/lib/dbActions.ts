@@ -179,26 +179,26 @@ export async function deleteResource(id: number) {
  * @param userEmail The email of the user borrowing it
  * @returns The updated resource or an error
  */
-export async function borrowResource(id: number, userEmail: string) {
+function generateDeadline(): string {
+  const now = new Date();
+  now.setDate(now.getDate() + 1); // 1 day later
+  now.setHours(9, 0, 0, 0); // 9:00 AM
+  return now.toISOString(); // store in ISO format
+}
+
+export async function borrowResource(resourceId: number, borrowerEmail: string) {
   try {
-    const now = new Date();
-    const deadline = new Date(now);
-
-    // Set return deadline: 1 day later
-    deadline.setDate(now.getDate() + 1);
-
-    const updatedResource = await prisma.resource.update({
-      where: { id },
+    const updated = await prisma.resource.update({
+      where: { id: resourceId },
       data: {
-        owner: userEmail,
-        deadline: deadline.toISOString(),
+        owner: borrowerEmail,
+        deadline: generateDeadline(),
       },
     });
-
-    return { success: true, resource: updatedResource };
+    return { success: true, resource: updated };
   } catch (error) {
     console.error('Error borrowing resource:', error);
-    return { success: false, error: 'Failed to borrow the resource' };
+    return { success: false, error: 'Failed to borrow resource' };
   }
 }
 
@@ -219,5 +219,34 @@ export async function returnResource(id: number) {
   } catch (error) {
     console.error('Error returning resource:', error);
     return { success: false, error: 'Failed to return the resource' };
+  }
+}
+
+/**
+ * Reserves a room by assigning it to the current user and setting a return deadline.
+ * @param resourceId The ID of the room to reserve
+ * @param reserverEmail The email of the user reserving it
+ * @returns The updated resource or an error
+ */
+function generateRoomDeadline(): string {
+  const now = new Date();
+  now.setDate(now.getDate() + 1);
+  now.setHours(9, 0, 0, 0); // Due at 9:00 AM the next day
+  return now.toISOString();
+}
+
+export async function reserveResource(resourceId: number, reserverEmail: string) {
+  try {
+    const updated = await prisma.resource.update({
+      where: { id: resourceId },
+      data: {
+        owner: reserverEmail,
+        deadline: generateRoomDeadline(),
+      },
+    });
+    return { success: true, resource: updated };
+  } catch (error) {
+    console.error('Error reserving room:', error);
+    return { success: false, error: 'Failed to reserve room' };
   }
 }

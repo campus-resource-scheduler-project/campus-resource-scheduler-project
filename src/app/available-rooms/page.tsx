@@ -8,7 +8,6 @@ import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import Image from 'next/image';
 import FilterSidebarRooms from '@/components/FilterSidebarRooms';
 import { useSession } from 'next-auth/react';
-import { borrowResource } from '@/lib/dbActions';
 
 type RoomItem = {
   id: string;
@@ -33,17 +32,12 @@ export default function AvailableRoomsPage() {
         const res = await fetch('/api/rooms');
         const data = await res.json();
 
-        console.log('Fetched rooms:', data); // Confirm data structure
+        // Only show rooms still available (owned by admin)
+        const availableRooms = data.filter(
+          (room: RoomItem) => room.owner?.toLowerCase?.() === 'admin@foo.com',
+        );
 
-        // TEMPORARY: show all rooms without filtering
-        setRooms(data.filter((room: RoomItem) => room.owner.toLowerCase() === 'admin@foo.com'));
-
-        // ✅ Later, reintroduce filtering when confirmed working:
-        // const currentUserEmail = session?.user?.email?.toLowerCase() ?? '';
-        // const ownedRooms = data.filter(
-        //   (room: RoomItem) => room.owner?.toLowerCase?.() === currentUserEmail
-        // );
-        // setRooms(ownedRooms);
+        setRooms(availableRooms);
       } catch (error) {
         console.error('Error fetching rooms:', error);
       }
@@ -120,20 +114,23 @@ export default function AvailableRoomsPage() {
                       size="sm"
                       className="w-100 rounded-0"
                       onClick={async () => {
-                        if (!session || !session.user?.email) {
-                          alert('You must be logged in to reserve a room.');
-                          return;
-                        }
+                        if (!session?.user?.email) return;
 
-                        const confirmReserve = confirm(`Are you sure you want to reserve ${room.name}?`);
-                        if (!confirmReserve) return;
+                        const confirmed = confirm(`Do you want to reserve ${room.name}?`);
+                        if (!confirmed) return;
 
-                        const result = await borrowResource(Number(room.id), session.user.email);
+                        const res = await fetch('/api/reserve', {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({ resourceId: room.id, userEmail: session.user.email }),
+                        });
+
+                        const result = await res.json();
                         if (result.success) {
-                          alert(`${room.name} has been reserved.`);
-                        // Optionally refresh page or state
+                          alert(`${room.name} reserved successfully`);
+                          window.location.reload();
                         } else {
-                          alert(`Failed to reserve ${room.name}.`);
+                          alert('Failed to reserve room.');
                         }
                       }}
                     >

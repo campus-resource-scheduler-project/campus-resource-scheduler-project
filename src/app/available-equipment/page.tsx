@@ -8,7 +8,6 @@ import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import Image from 'next/image';
 import FilterSidebarEquipment from '@/components/FilterSidebarEquipment';
 import { useSession } from 'next-auth/react';
-import { borrowResource } from '@/lib/dbActions';
 
 type EquipmentItem = {
   id: string;
@@ -35,14 +34,18 @@ export default function AvailableEquipmentPage() {
 
         console.log('Fetched equipment:', data);
 
-        // TEMPORARY: show all equipment without filtering
-        setEquipment(data.filter((item: EquipmentItem) => item.owner.toLowerCase() === 'admin@foo.com'));
+        // Only show equipment still available (owned by admin)
+        const availableEquipment = data.filter(
+          (item: EquipmentItem) => item.owner?.toLowerCase?.() === 'admin@foo.com',
+        );
+
+        setEquipment(availableEquipment);
       } catch (error) {
         console.error('Error fetching equipment:', error);
       }
     }
 
-    fetchEquipment(); // skip session for now
+    fetchEquipment();
   }, []);
 
   const filteredEquipment = equipment.filter((item) => {
@@ -119,21 +122,23 @@ export default function AvailableEquipmentPage() {
                       size="sm"
                       className="w-100 rounded-0"
                       onClick={async () => {
-                        if (!session?.user?.email) {
-                          alert('You must be logged in to borrow a resource.');
-                          return;
-                        }
+                        if (!session?.user?.email) return;
 
-                        const confirmed = confirm(`Borrow ${item.name}?`);
+                        const confirmed = confirm(`Do you want to borrow ${item.name}?`);
                         if (!confirmed) return;
 
-                        const result = await borrowResource(Number(item.id), session.user.email);
+                        const res = await fetch('/api/borrow', {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({ resourceId: item.id, userEmail: session.user.email }),
+                        });
+
+                        const result = await res.json();
                         if (result.success) {
-                          alert(`${item.name} has been borrowed successfully.`);
-                          // Remove from list
-                          setEquipment((prev) => prev.filter((i) => i.id !== item.id));
+                          alert(`${item.name} borrowed successfully`);
+                          window.location.reload(); // Refresh to hide borrowed item
                         } else {
-                          alert(result.error || 'Borrow failed.');
+                          alert('Failed to borrow item.');
                         }
                       }}
                     >
