@@ -1,8 +1,12 @@
 import { getServerSession } from 'next-auth/next';
 import { redirect } from 'next/navigation';
 import { PrismaClient, Resource } from '@prisma/client';
-import YourResources from '@/components/YourResources';
 import authOptions from '@/lib/authOptions';
+import dynamic from 'next/dynamic';
+
+const YourResources = dynamic(() => import('@/components/YourResources'), {
+  ssr: false,
+});
 
 // Server component for resources page
 export default async function ResourcesPage() {
