@@ -25,15 +25,29 @@ export default function AvailableRoomsPage() {
 
   useEffect(() => {
     async function fetchRooms() {
-      const res = await fetch('/api/rooms');
-      const data = await res.json();
+      try {
+        const res = await fetch('/api/rooms');
+        const data = await res.json();
 
-      const currentUserEmail = session?.user?.email?.toLowerCase() ?? '';
-      const ownedResources = data.filter(
-        (item: RoomItem) => item.owner.toLowerCase() === currentUserEmail,
-      );
+        const currentUserEmail = session?.user?.email?.toLowerCase() ?? '';
+        console.log('Logged in as:', currentUserEmail);
+        console.log('Fetched room data:', data);
 
-      setRooms(ownedResources);
+        if (!currentUserEmail) {
+          console.warn('No user email found in session.');
+          setRooms([]);
+          return;
+        }
+
+        const ownedResources = data.filter(
+          (item: RoomItem) => item.owner?.toLowerCase?.() === currentUserEmail,
+        );
+
+        console.log('Owned rooms:', ownedResources);
+        setRooms(ownedResources);
+      } catch (error) {
+        console.error('Error fetching rooms:', error);
+      }
     }
 
     if (status === 'authenticated') {

@@ -25,15 +25,29 @@ export default function AvailableEquipmentPage() {
 
   useEffect(() => {
     async function fetchEquipment() {
-      const res = await fetch('/api/equipment');
-      const data = await res.json();
+      try {
+        const res = await fetch('/api/equipment');
+        const data = await res.json();
 
-      const currentUserEmail = session?.user?.email?.toLowerCase() ?? '';
-      const ownedResources = data.filter(
-        (item: EquipmentItem) => item.owner.toLowerCase() === currentUserEmail,
-      );
+        const currentUserEmail = session?.user?.email?.toLowerCase() ?? '';
+        console.log('Logged in as:', currentUserEmail);
+        console.log('Fetched data:', data);
 
-      setEquipment(ownedResources);
+        if (!currentUserEmail) {
+          console.warn('No user email found in session.');
+          setEquipment([]);
+          return;
+        }
+
+        const ownedResources = data.filter(
+          (item: EquipmentItem) => item.owner?.toLowerCase?.() === currentUserEmail,
+        );
+
+        console.log('Owned resources:', ownedResources);
+        setEquipment(ownedResources);
+      } catch (error) {
+        console.error('Error fetching equipment:', error);
+      }
     }
 
     if (status === 'authenticated') {
