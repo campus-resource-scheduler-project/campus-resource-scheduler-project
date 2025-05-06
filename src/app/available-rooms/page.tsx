@@ -1,9 +1,14 @@
+/* eslint-disable no-restricted-globals */
+/* eslint-disable no-alert */
+
 'use client';
 
 import { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import Image from 'next/image';
 import FilterSidebarRooms from '@/components/FilterSidebarRooms';
+import { useSession } from 'next-auth/react';
+import { borrowResource } from '@/lib/dbActions';
 
 type RoomItem = {
   id: string;
@@ -18,6 +23,7 @@ type RoomItem = {
 };
 
 export default function AvailableRoomsPage() {
+  const { data: session } = useSession();
   const [rooms, setRooms] = useState<RoomItem[]>([]);
   const [filters, setFilters] = useState({ category: '', campus: '' });
 
@@ -109,7 +115,28 @@ export default function AvailableRoomsPage() {
 
                   {/* Reserve Button */}
                   <div className="text-center bg-white py-2">
-                    <Button variant="secondary" size="sm" className="w-100 rounded-0">
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      className="w-100 rounded-0"
+                      onClick={async () => {
+                        if (!session || !session.user?.email) {
+                          alert('You must be logged in to reserve a room.');
+                          return;
+                        }
+
+                        const confirmReserve = confirm(`Are you sure you want to reserve ${room.name}?`);
+                        if (!confirmReserve) return;
+
+                        const result = await borrowResource(Number(room.id), session.user.email);
+                        if (result.success) {
+                          alert(`${room.name} has been reserved.`);
+                        // Optionally refresh page or state
+                        } else {
+                          alert(`Failed to reserve ${room.name}.`);
+                        }
+                      }}
+                    >
                       Reserve
                     </Button>
                   </div>

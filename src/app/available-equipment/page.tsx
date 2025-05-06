@@ -1,9 +1,14 @@
+/* eslint-disable no-restricted-globals */
+/* eslint-disable no-alert */
+
 'use client';
 
 import { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import Image from 'next/image';
 import FilterSidebarEquipment from '@/components/FilterSidebarEquipment';
+import { useSession } from 'next-auth/react';
+import { borrowResource } from '@/lib/dbActions';
 
 type EquipmentItem = {
   id: string;
@@ -18,6 +23,7 @@ type EquipmentItem = {
 };
 
 export default function AvailableEquipmentPage() {
+  const { data: session } = useSession();
   const [equipment, setEquipment] = useState<EquipmentItem[]>([]);
   const [filters, setFilters] = useState({ category: '', campus: '' });
 
@@ -108,7 +114,29 @@ export default function AvailableEquipmentPage() {
 
                   {/* Borrow Button */}
                   <div className="text-center bg-white py-2">
-                    <Button variant="secondary" size="sm" className="w-100 rounded-0">
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      className="w-100 rounded-0"
+                      onClick={async () => {
+                        if (!session?.user?.email) {
+                          alert('You must be logged in to borrow a resource.');
+                          return;
+                        }
+
+                        const confirmed = confirm(`Borrow ${item.name}?`);
+                        if (!confirmed) return;
+
+                        const result = await borrowResource(Number(item.id), session.user.email);
+                        if (result.success) {
+                          alert(`${item.name} has been borrowed successfully.`);
+                          // Remove from list
+                          setEquipment((prev) => prev.filter((i) => i.id !== item.id));
+                        } else {
+                          alert(result.error || 'Borrow failed.');
+                        }
+                      }}
+                    >
                       Borrow
                     </Button>
                   </div>

@@ -174,6 +174,35 @@ export async function deleteResource(id: number) {
 }
 
 /**
+ * Borrows a resource by assigning it to the current user and setting a return deadline.
+ * @param id The ID of the resource to borrow
+ * @param userEmail The email of the user borrowing it
+ * @returns The updated resource or an error
+ */
+export async function borrowResource(id: number, userEmail: string) {
+  try {
+    const now = new Date();
+    const deadline = new Date(now);
+
+    // Set return deadline: 1 day later
+    deadline.setDate(now.getDate() + 1);
+
+    const updatedResource = await prisma.resource.update({
+      where: { id },
+      data: {
+        owner: userEmail,
+        deadline: deadline.toISOString(),
+      },
+    });
+
+    return { success: true, resource: updatedResource };
+  } catch (error) {
+    console.error('Error borrowing resource:', error);
+    return { success: false, error: 'Failed to borrow the resource' };
+  }
+}
+
+/**
  * Returns a resource by changing its owner to admin@foo.com
  * @param id The ID of the resource to return
  * @returns The updated resource
