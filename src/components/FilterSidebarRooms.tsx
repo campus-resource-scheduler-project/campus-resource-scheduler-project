@@ -1,28 +1,27 @@
 'use client';
 
-import { useState } from 'react';
 import { Button, Accordion, Form } from 'react-bootstrap';
 
 interface FilterSidebarRoomsProps {
   categoryOptions: string[];
   campusOptions: string[];
+  selectedCategory: string;
+  selectedCampus: string;
+  onFilterChange: (filters: { category: string; campus: string }) => void;
 }
 
-export default function FilterSidebarRooms({ categoryOptions, campusOptions }: FilterSidebarRoomsProps) {
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [selectedCampus, setSelectedCampus] = useState('');
-
-  const clearFilters = () => {
-    setSelectedCategory('');
-    setSelectedCampus('');
-  };
-
+export default function FilterSidebarRooms({
+  categoryOptions,
+  campusOptions,
+  selectedCategory,
+  selectedCampus,
+  onFilterChange,
+}: FilterSidebarRoomsProps) {
   return (
     <div className="p-3" style={{ backgroundColor: '#ffffff' }}>
       <h5 className="fw-bold mb-3">Filter Rooms</h5>
 
       <Accordion defaultActiveKey="0" alwaysOpen>
-        {/* Category Dropdown */}
         <Accordion.Item eventKey="0">
           <Accordion.Header>Category</Accordion.Header>
           <Accordion.Body>
@@ -33,14 +32,13 @@ export default function FilterSidebarRooms({ categoryOptions, campusOptions }: F
                 id={`category-${option}`}
                 label={option}
                 checked={selectedCategory === option}
-                onChange={() => setSelectedCategory(option)}
+                onChange={() => onFilterChange({ category: option, campus: selectedCampus })}
                 name="category"
               />
             ))}
           </Accordion.Body>
         </Accordion.Item>
 
-        {/* Campus Dropdown */}
         <Accordion.Item eventKey="1">
           <Accordion.Header>Campus</Accordion.Header>
           <Accordion.Body>
@@ -51,7 +49,7 @@ export default function FilterSidebarRooms({ categoryOptions, campusOptions }: F
                 id={`campus-${option}`}
                 label={option}
                 checked={selectedCampus === option}
-                onChange={() => setSelectedCampus(option)}
+                onChange={() => onFilterChange({ category: selectedCategory, campus: option })}
                 name="campus"
               />
             ))}
@@ -59,7 +57,11 @@ export default function FilterSidebarRooms({ categoryOptions, campusOptions }: F
         </Accordion.Item>
       </Accordion>
 
-      <Button className="mt-3 w-100" variant="danger" onClick={clearFilters}>
+      <Button
+        className="mt-3 w-100"
+        variant="danger"
+        onClick={() => onFilterChange({ category: '', campus: '' })}
+      >
         Clear All Filters
       </Button>
     </div>

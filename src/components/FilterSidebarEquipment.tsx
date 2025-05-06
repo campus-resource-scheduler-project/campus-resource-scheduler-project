@@ -1,22 +1,22 @@
 'use client';
 
-import { useState } from 'react';
 import { Button, Accordion, Form } from 'react-bootstrap';
 
 interface FilterSidebarEquipmentProps {
   categoryOptions: string[];
   campusOptions: string[];
+  selectedCategory: string;
+  selectedCampus: string;
+  onFilterChange: (filters: { category: string; campus: string }) => void;
 }
 
-export default function FilterSidebarEquipment({ categoryOptions, campusOptions }: FilterSidebarEquipmentProps) {
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [selectedCampus, setSelectedCampus] = useState('');
-
-  const clearFilters = () => {
-    setSelectedCategory('');
-    setSelectedCampus('');
-  };
-
+export default function FilterSidebarEquipment({
+  categoryOptions,
+  campusOptions,
+  selectedCategory,
+  selectedCampus,
+  onFilterChange,
+}: FilterSidebarEquipmentProps) {
   return (
     <div className="p-3" style={{ backgroundColor: '#ffffff' }}>
       <h5 className="fw-bold mb-3">Filter Equipment</h5>
@@ -33,7 +33,7 @@ export default function FilterSidebarEquipment({ categoryOptions, campusOptions 
                 id={`category-${option}`}
                 label={option}
                 checked={selectedCategory === option}
-                onChange={() => setSelectedCategory(option)}
+                onChange={() => onFilterChange({ category: option, campus: selectedCampus })}
                 name="category"
               />
             ))}
@@ -51,7 +51,7 @@ export default function FilterSidebarEquipment({ categoryOptions, campusOptions 
                 id={`campus-${option}`}
                 label={option}
                 checked={selectedCampus === option}
-                onChange={() => setSelectedCampus(option)}
+                onChange={() => onFilterChange({ category: selectedCategory, campus: option })}
                 name="campus"
               />
             ))}
@@ -59,7 +59,11 @@ export default function FilterSidebarEquipment({ categoryOptions, campusOptions 
         </Accordion.Item>
       </Accordion>
 
-      <Button className="mt-3 w-100" variant="danger" onClick={clearFilters}>
+      <Button
+        className="mt-3 w-100"
+        variant="danger"
+        onClick={() => onFilterChange({ category: '', campus: '' })}
+      >
         Clear All Filters
       </Button>
     </div>

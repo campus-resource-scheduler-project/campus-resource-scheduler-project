@@ -1,56 +1,48 @@
-/* eslint-disable max-len */
-import { getServerSession } from 'next-auth/next';
-import { redirect } from 'next/navigation';
-import { PrismaClient } from '@prisma/client';
-import authOptions from '@/lib/authOptions';
+'use client';
+
+import { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import Image from 'next/image';
 import FilterSidebarRooms from '@/components/FilterSidebarRooms';
 
-export default async function AvailableRoomsPage() {
-  const session = await getServerSession(authOptions);
-  if (!session) {
-    redirect('/api/auth/signin');
-  }
+type RoomItem = {
+  id: string;
+  name: string;
+  type: string;
+  category: string;
+  campus: string;
+  location: string;
+  image?: string;
+  posted: string;
+};
 
-  const prisma = new PrismaClient();
-  type RoomItem = {
-    id: string;
-    name: string;
-    type: string;
-    posted: string;
-    campus: string;
-    location: string;
-    owner: string;
-    image?: string;
-  };
+export default function AvailableRoomsPage() {
+  const [rooms, setRooms] = useState<RoomItem[]>([]);
+  const [filters, setFilters] = useState({ category: '', campus: '' });
 
-  let rooms: RoomItem[] = [];
+  useEffect(() => {
+    async function fetchRooms() {
+      const res = await fetch('/api/rooms'); // Replace with your real API route or loader
+      const data = await res.json();
+      setRooms(data.filter((item: { owner: string; }) => item.owner === 'admin@foo.com'));
+    }
+    fetchRooms();
+  }, []);
 
-  try {
-    const fetchedRooms = await prisma.resource.findMany({
-      where: { type: 'room' },
-      orderBy: { name: 'asc' },
-    });
-
-    rooms = fetchedRooms.map((room) => ({
-      ...room,
-      id: room.id.toString(),
-    }));
-  } catch (error) {
-    console.error('Error fetching room resources:', error);
-  } finally {
-    await prisma.$disconnect();
-  }
+  const filteredRooms = rooms.filter((room) => {
+    const matchesCategory = filters.category === '' || room.category === filters.category;
+    const matchesCampus = filters.campus === '' || room.campus === filters.campus;
+    return matchesCategory && matchesCampus;
+  });
 
   return (
-    <Container fluid className="py-3" id="hasBG" style={{ height: '100vh' }}>
+    <Container fluid className="py-3">
       <h2 className="mb-4">Available Rooms</h2>
       <Row>
-        {/* Left Sidebar */}
+        {/* Filter Sidebar */}
         <Col md={3}>
           <FilterSidebarRooms
-            categoryOptions={['Study Room', 'Lab']}
+            categoryOptions={['Study', 'Lab', 'Meeting']}
             campusOptions={[
               'UH Manoa',
               'UH West Oahu',
@@ -59,15 +51,19 @@ export default async function AvailableRoomsPage() {
               'Leeward CC',
               'Windward CC',
             ]}
+            selectedCategory={filters.category}
+            selectedCampus={filters.campus}
+            onFilterChange={setFilters}
           />
         </Col>
 
         {/* Room Cards */}
         <Col md={9}>
           <Row className="g-3">
-            {rooms.map((room) => (
+            {filteredRooms.map((room) => (
               <Col key={room.id} xs={12} sm={6} md={6} lg={4} xl={3}>
                 <Card className="h-100 border-0">
+                  {/* Image */}
                   <div style={{ width: '100%', height: '250px', position: 'relative' }}>
                     <Image
                       src={room.image || '/images/default-resource.jpg'}
@@ -81,27 +77,25 @@ export default async function AvailableRoomsPage() {
                     />
                   </div>
 
+                  {/* Info Section */}
                   <div className="bg-light p-3" style={{ height: '130px' }}>
                     <h5 className="mb-1 fs-6">{room.name}</h5>
                     <div className="text-muted small" style={{ fontSize: '0.75rem' }}>
                       <div className="d-flex justify-content-between">
-                        <span>{room.campus}</span>
-                        <span>{room.owner}</span>
+                        <span>{room.category}</span>
+                        <span>{room.posted}</span>
                       </div>
                       <div className="d-flex justify-content-between">
-                        <span>{room.posted}</span>
+                        <span>{room.campus}</span>
                         <span>{room.location}</span>
                       </div>
                     </div>
                   </div>
 
+                  {/* Reserve Button */}
                   <div className="text-center bg-white py-2">
-                    <Button
-                      variant="secondary"
-                      size="sm"
-                      className="w-100 rounded-0"
-                    >
-                      {room.type}
+                    <Button variant="secondary" size="sm" className="w-100 rounded-0">
+                      Reserve
                     </Button>
                   </div>
                 </Card>
