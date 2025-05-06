@@ -52,7 +52,7 @@ export default function AvailableEquipmentPage() {
           <FilterSidebarEquipment
             categoryOptions={[
               'General',
-              'Electronics',
+              'Electronic',
               'Books',
               'Stationery',
               'Equipment',
