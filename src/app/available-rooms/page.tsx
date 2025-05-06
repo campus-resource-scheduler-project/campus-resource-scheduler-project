@@ -10,7 +10,7 @@ import FilterSidebarRooms from '@/components/FilterSidebarRooms';
 import { useSession } from 'next-auth/react';
 
 type RoomItem = {
-  id: string;
+  id: number;
   name: string;
   type: string;
   category: string;
@@ -26,13 +26,13 @@ export default function AvailableRoomsPage() {
   const [rooms, setRooms] = useState<RoomItem[]>([]);
   const [filters, setFilters] = useState({ category: '', campus: '' });
 
+  // Fetch available rooms
   useEffect(() => {
     async function fetchRooms() {
       try {
         const res = await fetch('/api/rooms');
         const data = await res.json();
 
-        // Only show rooms still available (owned by admin)
         const availableRooms = data.filter(
           (room: RoomItem) => room.owner?.toLowerCase?.() === 'admin@foo.com',
         );
@@ -45,6 +45,35 @@ export default function AvailableRoomsPage() {
 
     fetchRooms();
   }, []);
+
+  // Reserve handler
+  const handleReserve = async (roomId: number) => {
+    const confirmed = confirm('Do you want to reserve this room?');
+    if (!confirmed || !session?.user?.email) return;
+
+    try {
+      const res = await fetch('/api/reserve', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: roomId, user: session.user.email }),
+      });
+
+      if (res.ok) {
+        const updated = await fetch('/api/rooms');
+        const data = await updated.json();
+        const available = data.filter(
+          (room: RoomItem) => room.owner?.toLowerCase?.() === 'admin@foo.com',
+        );
+        setRooms(available);
+        alert('Room reserved successfully!');
+      } else {
+        alert('Failed to reserve room.');
+      }
+    } catch (error) {
+      console.error('Error reserving room:', error);
+      alert('An error occurred while reserving the room.');
+    }
+  };
 
   const filteredRooms = rooms.filter((room) => {
     const matchesCategory = filters.category === '' || room.category.toLowerCase() === filters.category.toLowerCase();
@@ -78,7 +107,6 @@ export default function AvailableRoomsPage() {
             {filteredRooms.map((room) => (
               <Col key={room.id} xs={12} sm={6} md={6} lg={4} xl={3}>
                 <Card className="h-100 border-0">
-                  {/* Image */}
                   <div style={{ width: '100%', height: '250px', position: 'relative' }}>
                     <Image
                       src={room.image || '/images/default-resource.jpg'}
@@ -92,7 +120,6 @@ export default function AvailableRoomsPage() {
                     />
                   </div>
 
-                  {/* Info Section */}
                   <div className="bg-light p-3" style={{ height: '130px' }}>
                     <h5 className="mb-1 fs-6">{room.name}</h5>
                     <div className="text-muted small" style={{ fontSize: '0.75rem' }}>
@@ -107,32 +134,12 @@ export default function AvailableRoomsPage() {
                     </div>
                   </div>
 
-                  {/* Reserve Button */}
                   <div className="text-center bg-white py-2">
                     <Button
                       variant="secondary"
                       size="sm"
                       className="w-100 rounded-0"
-                      onClick={async () => {
-                        if (!session?.user?.email) return;
-
-                        const confirmed = confirm(`Do you want to reserve ${room.name}?`);
-                        if (!confirmed) return;
-
-                        const res = await fetch('/api/reserve', {
-                          method: 'POST',
-                          headers: { 'Content-Type': 'application/json' },
-                          body: JSON.stringify({ resourceId: room.id, userEmail: session.user.email }),
-                        });
-
-                        const result = await res.json();
-                        if (result.success) {
-                          alert(`${room.name} reserved successfully`);
-                          window.location.reload();
-                        } else {
-                          alert('Failed to reserve room.');
-                        }
-                      }}
+                      onClick={() => handleReserve(room.id)}
                     >
                       Reserve
                     </Button>

@@ -9,7 +9,7 @@ export async function GET() {
     const equipment = await prisma.resource.findMany({
       where: {
         type: 'physical',
-        owner: 'admin@foo.com', // ✅ Only show available equipment
+        owner: 'admin@foo.com', // Only show available equipment
       },
       orderBy: { name: 'asc' },
     });

@@ -29,17 +29,12 @@ export default function AvailableEquipmentPage() {
   useEffect(() => {
     async function fetchEquipment() {
       try {
-        const res = await fetch('/api/equipment');
-        const data = await res.json();
-
-        console.log('Fetched equipment:', data);
-
-        // Only show equipment still available (owned by admin)
-        const availableEquipment = data.filter(
+        const updated = await fetch('/api/equipment');
+        const data = await updated.json();
+        const available = data.filter(
           (item: EquipmentItem) => item.owner?.toLowerCase?.() === 'admin@foo.com',
         );
-
-        setEquipment(availableEquipment);
+        setEquipment(available);
       } catch (error) {
         console.error('Error fetching equipment:', error);
       }
@@ -47,6 +42,23 @@ export default function AvailableEquipmentPage() {
 
     fetchEquipment();
   }, []);
+
+  const handleReserve = async (itemId: number) => {
+    const res = await fetch('/api/reserve', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: itemId, user: session?.user?.email }),
+    });
+
+    if (res.ok) {
+      // Refresh the equipment list after successful reservation
+      const updated = await fetch('/api/equipment');
+      const data = await updated.json();
+      setEquipment(data);
+    } else {
+      console.error('Reservation failed');
+    }
+  };
 
   const filteredEquipment = equipment.filter((item) => {
     const matchesCategory = filters.category === '' || item.category.toLowerCase() === filters.category.toLowerCase();
@@ -121,28 +133,9 @@ export default function AvailableEquipmentPage() {
                       variant="secondary"
                       size="sm"
                       className="w-100 rounded-0"
-                      onClick={async () => {
-                        if (!session?.user?.email) return;
-
-                        const confirmed = confirm(`Do you want to borrow ${item.name}?`);
-                        if (!confirmed) return;
-
-                        const res = await fetch('/api/borrow', {
-                          method: 'POST',
-                          headers: { 'Content-Type': 'application/json' },
-                          body: JSON.stringify({ resourceId: item.id, userEmail: session.user.email }),
-                        });
-
-                        const result = await res.json();
-                        if (result.success) {
-                          alert(`${item.name} borrowed successfully`);
-                          window.location.reload(); // Refresh to hide borrowed item
-                        } else {
-                          alert('Failed to borrow item.');
-                        }
-                      }}
+                      onClick={() => handleReserve(Number(item.id))}
                     >
-                      Borrow
+                      Reserve
                     </Button>
                   </div>
                 </Card>
