@@ -68,14 +68,11 @@ export default function AvailableRoomsPage() {
 
       if (res.ok) {
         const updated = await fetch('/api/rooms');
-        const data = await updated.json();
+        const updatedData = await updated.json();
 
-        console.log('Updated room list after reservation:', data);
+        console.log('Updated room list after reservation:', updatedData);
 
-        const available = data.filter(
-          (room: RoomItem) => room.owner?.toLowerCase?.() === 'admin@foo.com',
-        );
-        setRooms(available);
+        setRooms(updatedData);
         alert('Room reserved successfully!');
       } else {
         alert('Failed to reserve room.');

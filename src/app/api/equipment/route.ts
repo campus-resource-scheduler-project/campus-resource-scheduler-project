@@ -6,20 +6,19 @@ const prisma = new PrismaClient();
 
 export async function GET() {
   try {
-    const equipment = await prisma.resource.findMany({
+    const availableEquipment = await prisma.resource.findMany({
       where: {
-        type: 'physical',
-        owner: 'admin@foo.com', // Only show available equipment
-        NOT: {
-          deadline: '1999-12-31T13:59:00.000Z',
-        },
+        type: 'equipment',
+        owner: 'admin@foo.com',
       },
-      orderBy: { name: 'asc' },
+      orderBy: {
+        posted: 'desc',
+      },
     });
 
-    return NextResponse.json(equipment);
+    return NextResponse.json(availableEquipment);
   } catch (error) {
-    console.error('Failed to fetch equipment:', error);
+    console.error('Error fetching equipment:', error);
     return new NextResponse('Internal Server Error', { status: 500 });
   } finally {
     await prisma.$disconnect();

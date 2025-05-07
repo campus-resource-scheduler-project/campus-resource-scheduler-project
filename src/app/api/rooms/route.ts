@@ -6,20 +6,19 @@ const prisma = new PrismaClient();
 
 export async function GET() {
   try {
-    const rooms = await prisma.resource.findMany({
+    const availableRooms = await prisma.resource.findMany({
       where: {
         type: 'room',
-        owner: 'admin@foo.com', // Only show available rooms
-        NOT: {
-          deadline: '1999-12-31T13:59:00.000Z',
-        },
+        owner: 'admin@foo.com',
       },
-      orderBy: { name: 'asc' },
+      orderBy: {
+        posted: 'desc',
+      },
     });
 
-    return NextResponse.json(rooms);
+    return NextResponse.json(availableRooms);
   } catch (error) {
-    console.error('Failed to fetch rooms:', error);
+    console.error('Error fetching rooms:', error);
     return new NextResponse('Internal Server Error', { status: 500 });
   } finally {
     await prisma.$disconnect();

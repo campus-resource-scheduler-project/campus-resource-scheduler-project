@@ -78,12 +78,7 @@ export default function AvailableEquipmentPage() {
 
         console.log('Updated equipment list after borrow:', updatedData);
 
-        // Filter again to only include available (owned by admin)
-        const refreshedAvailable = updatedData.filter(
-          (item: EquipmentItem) => item.owner?.toLowerCase?.() === 'admin@foo.com',
-        );
-
-        setEquipment(refreshedAvailable);
+        setEquipment(updatedData);
       } else {
         alert(result.error || 'Borrow failed');
       }
