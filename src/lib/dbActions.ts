@@ -245,6 +245,25 @@ function generateRoomDeadline(): string {
 
 export async function reserveResource(resourceId: number, reserverEmail: string) {
   try {
+    // Check if the user already has a room reserved
+    const existingRoom = await prisma.resource.findFirst({
+      where: {
+        type: 'room',
+        owner: reserverEmail,
+        NOT: {
+          deadline: '1999-12-31T13:59:00.000Z', // adjust if you use a different "returned" value
+        },
+      },
+    });
+
+    if (existingRoom) {
+      return {
+        success: false,
+        error: 'You already have a reserved room. Please return it before reserving another.',
+      };
+    }
+
+    // Reserve the new room
     const updated = await prisma.resource.update({
       where: { id: resourceId },
       data: {
@@ -252,6 +271,7 @@ export async function reserveResource(resourceId: number, reserverEmail: string)
         deadline: generateRoomDeadline(),
       },
     });
+
     return { success: true, resource: updated };
   } catch (error) {
     console.error('Error reserving room:', error);
