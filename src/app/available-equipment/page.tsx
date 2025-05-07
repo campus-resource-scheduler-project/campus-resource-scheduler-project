@@ -46,6 +46,9 @@ export default function AvailableEquipmentPage() {
   const handleBorrow = async (itemId: number) => {
     if (!session?.user?.email) return;
 
+    const confirmed = confirm('Do you want to borrow this item?');
+    if (!confirmed) return;
+
     try {
       const res = await fetch('/api/borrow', {
         method: 'POST',
@@ -60,13 +63,20 @@ export default function AvailableEquipmentPage() {
       console.log('Borrow result:', result);
 
       if (res.ok && result.success) {
-        alert('Item borrowed!');
-        setEquipment(prev => prev.filter(item => item.id !== String(itemId))); // important for UI consistency
+        alert('Item borrowed successfully!');
+
+        const updated = await fetch('/api/equipment');
+        const data = await updated.json();
+        const available = data.filter(
+          (item: EquipmentItem) => item.owner?.toLowerCase?.() === 'admin@foo.com',
+        );
+        setEquipment(available);
       } else {
         alert(result.error || 'Borrow failed');
       }
     } catch (error) {
       console.error('Borrow error:', error);
+      alert('An error occurred while borrowing the item.');
     }
   };
 
