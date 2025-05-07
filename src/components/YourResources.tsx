@@ -153,6 +153,7 @@ const YourResources: React.FC<YourResourcesProps> = ({ initialResources = [] }) 
                         handleReturnResource(resource.id).then(success => {
                           if (success) {
                             alert(`${resource.name} has been returned successfully`);
+                            window.location.reload(); // Reload the page to reflect changes
                           } else {
                             alert('Failed to return the resource. Please try again.');
                           }
