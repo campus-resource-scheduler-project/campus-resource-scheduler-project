@@ -44,19 +44,29 @@ export default function AvailableEquipmentPage() {
   }, []);
 
   const handleBorrow = async (itemId: number) => {
-    const res = await fetch('/api/borrow', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: itemId, user: session?.user?.email }),
-    });
+    if (!session?.user?.email) return;
 
-    if (res.ok) {
-      // Refresh the equipment list after successful borrow
-      const updated = await fetch('/api/equipment');
-      const data = await updated.json();
-      setEquipment(data);
-    } else {
-      console.error('Borrow failed');
+    try {
+      const res = await fetch('/api/borrow', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          resourceId: itemId,
+          userEmail: session.user.email,
+        }),
+      });
+
+      const result = await res.json();
+      console.log('Borrow result:', result);
+
+      if (res.ok && result.success) {
+        alert('Item borrowed!');
+        window.location.reload(); // ⬅️ important for UI consistency
+      } else {
+        alert(result.error || 'Borrow failed');
+      }
+    } catch (error) {
+      console.error('Borrow error:', error);
     }
   };
 

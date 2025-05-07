@@ -7,7 +7,6 @@ import React, { useState } from 'react';
 import { Container, Row, Col, Card, Spinner } from 'react-bootstrap';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
-import { returnResource } from '@/lib/dbActions';
 
 // Loading component for use within the client component
 const LoadingSpinner = () => (
@@ -55,8 +54,14 @@ const YourResources: React.FC<YourResourcesProps> = ({ initialResources = [] }) 
     try {
       setLoading(true);
 
+      const res = await fetch('/api/return', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ resourceId }),
+      });
+
       // Call the server action to return the resource
-      const result = await returnResource(resourceId);
+      const result = await res.json();
 
       if (result.success) {
         // Remove the returned resource from the list
@@ -64,6 +69,7 @@ const YourResources: React.FC<YourResourcesProps> = ({ initialResources = [] }) 
         setLoading(false);
         return true;
       }
+
       throw new Error(result.error || 'Failed to return resource');
     } catch (err) {
       console.error('Error returning resource:', err);
