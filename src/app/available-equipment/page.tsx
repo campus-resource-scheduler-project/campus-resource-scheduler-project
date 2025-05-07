@@ -64,6 +64,8 @@ export default async function AvailableEquipmentPage() {
     await prisma.$disconnect();
   }
 
+  console.log('Fetched equipment:', equipment);
+
   return (
     <main id="hasBG" style={{ minHeight: '100vh', overflow: 'auto', paddingBottom: '80px' }}>
       <AvailableEquipment initialResources={equipment} />
