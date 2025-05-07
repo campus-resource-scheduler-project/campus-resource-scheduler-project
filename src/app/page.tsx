@@ -42,7 +42,7 @@ const Home = async () => {
                   size="lg"
                   id="landing-button"
                   className="mt-2 rounded-0"
-                  href="/"
+                  href="/auth/signin"
                   style={{ backgroundColor: '#363636', border: 'none' }}
                 >
                   <b>Borrow Equipment</b>
@@ -53,7 +53,7 @@ const Home = async () => {
                   size="lg"
                   id="landing-button"
                   className="mt-2 rounded-0"
-                  href="/"
+                  href="/auth/signin"
                   style={{ backgroundColor: '#363636', border: 'none' }}
                 >
                   <b>Borrow Rooms</b>
@@ -72,7 +72,7 @@ const Home = async () => {
                 size="lg"
                 id="landing-button"
                 className="mt-2 rounded-0"
-                href="/"
+                href="/auth/signin"
                 style={{ backgroundColor: '#363636', border: 'none' }}
               >
                 <b>LoanLink</b>
