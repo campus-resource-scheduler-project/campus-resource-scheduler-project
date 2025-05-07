@@ -48,10 +48,9 @@ export default function AvailableEquipmentPage() {
     fetchEquipment();
   }, []);
 
+  // Borrow handler
   const handleBorrow = async (itemId: number) => {
     if (!session?.user?.email) return;
-
-    console.log('Borrowing as:', session.user.email);
 
     const confirmed = confirm('Do you want to borrow this item?');
     if (!confirmed) return;
@@ -67,18 +66,9 @@ export default function AvailableEquipmentPage() {
       });
 
       const result = await res.json();
-      console.log('Borrow result:', result);
-
       if (res.ok && result.success) {
-        alert('Item borrowed successfully!');
-
-        // Re-fetch to ensure the latest state
-        const updatedRes = await fetch('/api/equipment');
-        const updatedData = await updatedRes.json();
-
-        console.log('Updated equipment list after borrow:', updatedData);
-
-        setEquipment(updatedData);
+        // 🧠 Remove the item locally instead of re-fetching all
+        setEquipment(prev => prev.filter(item => item.id !== itemId));
       } else {
         alert(result.error || 'Borrow failed');
       }

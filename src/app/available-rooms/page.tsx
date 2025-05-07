@@ -51,10 +51,10 @@ export default function AvailableRoomsPage() {
 
   // Reserve handler
   const handleReserve = async (roomId: number) => {
-    const confirmed = confirm('Do you want to reserve this room?');
-    if (!confirmed || !session?.user?.email) return;
+    if (!session?.user?.email) return;
 
-    console.log('Reserving room as:', session.user.email);
+    const confirmed = confirm('Do you want to reserve this room?');
+    if (!confirmed) return;
 
     try {
       const res = await fetch('/api/reserve', {
@@ -64,16 +64,9 @@ export default function AvailableRoomsPage() {
       });
 
       const result = await res.json();
-      console.log('Reservation result:', result);
-
-      if (res.ok) {
-        const updated = await fetch('/api/rooms');
-        const updatedData = await updated.json();
-
-        console.log('Updated room list after reservation:', updatedData);
-
-        setRooms(updatedData);
-        alert('Room reserved successfully!');
+      if (res.ok && result.success) {
+        // 🧠 Remove the reserved room locally
+        setRooms(prev => prev.filter(room => room.id !== roomId));
       } else {
         alert('Failed to reserve room.');
       }
