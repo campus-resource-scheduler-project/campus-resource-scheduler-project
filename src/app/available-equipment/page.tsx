@@ -10,7 +10,7 @@ import FilterSidebarEquipment from '@/components/FilterSidebarEquipment';
 import { useSession } from 'next-auth/react';
 
 type EquipmentItem = {
-  id: string;
+  id: number;
   name: string;
   type: string;
   category: string;

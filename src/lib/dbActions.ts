@@ -198,7 +198,7 @@ export async function borrowResource(resourceId: number, borrowerEmail: string) 
     return { success: true, resource: updated };
   } catch (error) {
     console.error('Error borrowing resource:', error);
-    return { success: false, error: 'Failed to borrow resource' };
+    return { success: false, error: (error instanceof Error ? error.message : 'Failed to borrow resource') };
   }
 }
 
@@ -213,13 +213,13 @@ export async function returnResource(id: number) {
       where: { id },
       data: {
         owner: 'admin@foo.com',
-        deadline: generateDeadline(), // Set a past date to indicate it's available
+        deadline: generateDeadline(), // Sets a future date
       },
     });
     return { success: true, resource: updatedResource };
   } catch (error) {
     console.error('Error returning resource:', error);
-    return { success: false, error: 'Failed to return the resource' };
+    return { success: false, error: (error instanceof Error ? error.message : 'Failed to return the resource') };
   }
 }
 
