@@ -66,6 +66,7 @@ export default function AvailableRoomsPage() {
         );
         setRooms(available);
         alert('Room reserved successfully!');
+        setRooms(prev => prev.filter(item => item.id !== roomId)); // important for UI consistency
       } else {
         alert('Failed to reserve room.');
       }

@@ -213,6 +213,7 @@ export async function returnResource(id: number) {
       where: { id },
       data: {
         owner: 'admin@foo.com',
+        deadline: undefined, // Clear the deadline when returning
       },
     });
     return { success: true, resource: updatedResource };
