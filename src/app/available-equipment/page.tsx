@@ -61,7 +61,7 @@ export default function AvailableEquipmentPage() {
 
       if (res.ok && result.success) {
         alert('Item borrowed!');
-        setEquipment(prev => prev.filter(item => item.id !== itemId.toString())); // important for UI consistency
+        setEquipment(prev => prev.filter(item => item.id !== String(itemId))); // important for UI consistency
       } else {
         alert(result.error || 'Borrow failed');
       }
