@@ -43,20 +43,20 @@ export default function AvailableEquipmentPage() {
     fetchEquipment();
   }, []);
 
-  const handleReserve = async (itemId: number) => {
-    const res = await fetch('/api/reserve', {
+  const handleBorrow = async (itemId: number) => {
+    const res = await fetch('/api/borrow', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id: itemId, user: session?.user?.email }),
     });
 
     if (res.ok) {
-      // Refresh the equipment list after successful reservation
+      // Refresh the equipment list after successful borrow
       const updated = await fetch('/api/equipment');
       const data = await updated.json();
       setEquipment(data);
     } else {
-      console.error('Reservation failed');
+      console.error('Borrow failed');
     }
   };
 
@@ -133,9 +133,9 @@ export default function AvailableEquipmentPage() {
                       variant="secondary"
                       size="sm"
                       className="w-100 rounded-0"
-                      onClick={() => handleReserve(Number(item.id))}
+                      onClick={() => handleBorrow(Number(item.id))}
                     >
-                      Reserve
+                      Borrow
                     </Button>
                   </div>
                 </Card>
