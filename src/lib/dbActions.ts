@@ -213,7 +213,6 @@ export async function returnResource(id: number) {
       where: { id },
       data: {
         owner: 'admin@foo.com',
-        deadline: '2099-12-31T23:59:59.000Z', // means "no real deadline"
       },
     });
     return { success: true, resource: updatedResource };
