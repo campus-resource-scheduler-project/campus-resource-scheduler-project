@@ -51,6 +51,8 @@ export default function AvailableEquipmentPage() {
   const handleBorrow = async (itemId: number) => {
     if (!session?.user?.email) return;
 
+    console.log('Borrowing as:', session.user.email);
+
     const confirmed = confirm('Do you want to borrow this item?');
     if (!confirmed) return;
 
@@ -74,10 +76,11 @@ export default function AvailableEquipmentPage() {
         const updatedRes = await fetch('/api/equipment');
         const updatedData = await updatedRes.json();
 
+        console.log('Updated equipment list after borrow:', updatedData);
+
         // Filter again to only include available (owned by admin)
         const refreshedAvailable = updatedData.filter(
-          (item: EquipmentItem) => item.owner?.toLowerCase?.() === 'admin@foo.com'
-          && item.deadline !== '1999-12-31T13:59:00.000Z',
+          (item: EquipmentItem) => item.owner?.toLowerCase?.() === 'admin@foo.com',
         );
 
         setEquipment(refreshedAvailable);

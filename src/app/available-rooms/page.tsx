@@ -54,6 +54,8 @@ export default function AvailableRoomsPage() {
     const confirmed = confirm('Do you want to reserve this room?');
     if (!confirmed || !session?.user?.email) return;
 
+    console.log('Reserving room as:', session.user.email);
+
     try {
       const res = await fetch('/api/reserve', {
         method: 'POST',
@@ -61,9 +63,15 @@ export default function AvailableRoomsPage() {
         body: JSON.stringify({ id: roomId, user: session.user.email }),
       });
 
+      const result = await res.json();
+      console.log('Reservation result:', result);
+
       if (res.ok) {
         const updated = await fetch('/api/rooms');
         const data = await updated.json();
+
+        console.log('Updated room list after reservation:', data);
+
         const available = data.filter(
           (room: RoomItem) => room.owner?.toLowerCase?.() === 'admin@foo.com',
         );

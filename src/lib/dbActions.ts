@@ -207,13 +207,20 @@ export async function borrowResource(resourceId: number, borrowerEmail: string) 
  * @param id The ID of the resource to return
  * @returns The updated resource
  */
+function generateResourceDeadline(): string {
+  const now = new Date();
+  now.setDate(now.getDate() + 1); // 1 day later
+  now.setHours(9, 0, 0, 0); // 9:00 AM
+  return now.toISOString(); // store in ISO format
+}
+
 export async function returnResource(id: number) {
   try {
     const updatedResource = await prisma.resource.update({
       where: { id },
       data: {
         owner: 'admin@foo.com',
-        deadline: '1999-12-31T13:59:00.000Z', // Sentinel return marker
+        deadline: generateResourceDeadline(), // Sentinel return marker
       },
     });
     return { success: true, resource: updatedResource };
@@ -231,9 +238,9 @@ export async function returnResource(id: number) {
  */
 function generateRoomDeadline(): string {
   const now = new Date();
-  now.setDate(now.getDate() + 1);
-  now.setHours(9, 0, 0, 0); // Due at 9:00 AM the next day
-  return now.toISOString();
+  now.setDate(now.getDate() + 1); // 1 day later
+  now.setHours(9, 0, 0, 0); // 9:00 AM
+  return now.toISOString(); // Store in ISO format
 }
 
 export async function reserveResource(resourceId: number, reserverEmail: string) {
