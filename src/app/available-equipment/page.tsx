@@ -28,7 +28,7 @@ export default async function AvailableEquipmentPage() {
   try {
     const rawEquipment = await prisma.resource.findMany({
       where: {
-        type: 'equipment',
+        type: 'physical',
         owner: 'admin@foo.com',
       },
       orderBy: { posted: 'desc' },
