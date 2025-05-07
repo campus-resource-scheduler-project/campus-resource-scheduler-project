@@ -65,12 +65,16 @@ export default function AvailableEquipmentPage() {
       if (res.ok && result.success) {
         alert('Item borrowed successfully!');
 
-        const updated = await fetch('/api/equipment');
-        const data = await updated.json();
-        const available = data.filter(
+        // Re-fetch to ensure the latest state
+        const updatedRes = await fetch('/api/equipment');
+        const updatedData = await updatedRes.json();
+
+        // Filter again to only include available (owned by admin)
+        const refreshedAvailable = updatedData.filter(
           (item: EquipmentItem) => item.owner?.toLowerCase?.() === 'admin@foo.com',
         );
-        setEquipment(available);
+
+        setEquipment(refreshedAvailable);
       } else {
         alert(result.error || 'Borrow failed');
       }
