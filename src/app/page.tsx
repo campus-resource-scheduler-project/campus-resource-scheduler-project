@@ -2,7 +2,7 @@ import { getServerSession } from 'next-auth';
 import { prisma } from '@/lib/prisma';
 import authOptions from '@/lib/authOptions';
 import Image from 'next/image';
-import { Button, Card, Col, Container, Row } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 /** The Home page. */
 const Home = async () => {
@@ -17,6 +17,7 @@ const Home = async () => {
   if (isJohn) {
     resources = await prisma.resource.findMany({
       where: { owner: 'admin@foo.com' },
+      take: 3,
     });
   } else if (isAdmin) {
     resources = await prisma.resource.findMany({
@@ -86,73 +87,71 @@ const Home = async () => {
   // Admin view
   if (isAdmin) {
     return (
-      <main id="hasBG" style={{ overflowX: 'hidden' }}>
-        <div style={{ backgroundColor: '#363636', color: 'white', padding: '4rem 1rem' }}>
-          <Container>
-            <Row className="mb-4 text-center">
-              <Col>
-                <h2 className="fw-bold mb-3">All Resources (Admin View)</h2>
-                <p className="lead" style={{ maxWidth: '700px', margin: '0 auto' }}>
-                  As an admin, you can view and manage all resources in the system.
-                </p>
-              </Col>
-            </Row>
+      <main id="hasBG" style={{ overflowX: 'hidden', minHeight: '100vh', padding: '2rem' }}>
+        <div className="container py-5">
+          <div className="row mb-5 text-center">
+            <div className="col">
+              <h2 className="fw-bold mb-3" style={{ color: 'black' }}>All Resources (Admin View)</h2>
+              <p className="lead" style={{ maxWidth: '700px', margin: '0 auto', color: 'black' }}>
+                As an admin, you can view and manage all resources in the system.
+              </p>
+            </div>
+          </div>
 
-            <Row className="g-4 justify-content-center">
-              {resources.map((res) => (
-                <Col key={res.id} xs={12} sm={6} md={4} lg={3}>
-                  <Card className="h-100 shadow-sm border-0">
-                    <div style={{ height: '160px', position: 'relative' }}>
-                      <Image
-                        src={res.image || '/images/default-resource.jpg'}
-                        alt={res.name}
-                        fill
-                        style={{
-                          objectFit: 'cover',
-                          borderTopLeftRadius: '0.375rem',
-                          borderTopRightRadius: '0.375rem',
-                        }}
-                      />
-                    </div>
-                    <Card.Body className="bg-white text-dark">
-                      <Card.Title>{res.name}</Card.Title>
-                      <Card.Text>
-                        <small>
-                          <b>Owner:</b>
-                          {' '}
-                          {res.owner}
-                        </small>
-                        <br />
-                        <small>
-                          <b>Type:</b>
-                          {' '}
-                          {res.type}
-                        </small>
-                        <br />
-                        <small>
-                          <b>Location:</b>
-                          {' '}
-                          {res.location}
-                        </small>
-                        <br />
-                        <small>
-                          <b>Campus:</b>
-                          {' '}
-                          {res.campus}
-                        </small>
-                      </Card.Text>
-                    </Card.Body>
-                    <Card.Footer className="bg-secondary text-white text-center">
+          <div className="row g-4 justify-content-center">
+            {resources.map((res) => (
+              <div key={res.id} className="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div className="card h-100 shadow-sm border-0">
+                  <div style={{ height: '160px', position: 'relative' }}>
+                    <Image
+                      src={res.image || '/images/default-resource.jpg'}
+                      alt={res.name}
+                      fill
+                      style={{
+                        objectFit: 'cover',
+                        borderTopLeftRadius: '0.375rem',
+                        borderTopRightRadius: '0.375rem',
+                      }}
+                    />
+                  </div>
+                  <div className="card-body bg-white text-dark">
+                    <h5 className="card-title">{res.name}</h5>
+                    <p className="card-text">
                       <small>
-                        Posted:
-                        {res.posted}
+                        <b>Owner:</b>
+                        {' '}
+                        {res.owner}
                       </small>
-                    </Card.Footer>
-                  </Card>
-                </Col>
-              ))}
-            </Row>
-          </Container>
+                      <br />
+                      <small>
+                        <b>Type:</b>
+                        {' '}
+                        {res.type}
+                      </small>
+                      <br />
+                      <small>
+                        <b>Location:</b>
+                        {' '}
+                        {res.location}
+                      </small>
+                      <br />
+                      <small>
+                        <b>Campus:</b>
+                        {' '}
+                        {res.campus}
+                      </small>
+                    </p>
+                  </div>
+                  <div className="card-footer bg-secondary text-white text-center">
+                    <small>
+                      Posted:
+                      {res.posted}
+                    </small>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </main>
     );
