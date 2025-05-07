@@ -213,7 +213,7 @@ export async function returnResource(id: number) {
       where: { id },
       data: {
         owner: 'admin@foo.com',
-        deadline: null, // Sets a future date
+        deadline: '1999-12-31T13:59:00.000Z', // Sentinel return marker
       },
     });
     return { success: true, resource: updatedResource };
