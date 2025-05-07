@@ -32,6 +32,10 @@ export default function AvailableRoomsPage() {
       try {
         const res = await fetch('/api/rooms');
         const data = await res.json();
+
+        // log raw and filtered data
+        console.log('Raw rooms data from API:', data);
+
         const availableRooms = data.filter(
           (room: RoomItem) => room.owner?.toLowerCase?.() === 'admin@foo.com',
         );

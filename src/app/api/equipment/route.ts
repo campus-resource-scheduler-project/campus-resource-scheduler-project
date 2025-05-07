@@ -10,6 +10,9 @@ export async function GET() {
       where: {
         type: 'physical',
         owner: 'admin@foo.com', // Only show available equipment
+        NOT: {
+          deadline: '1999-12-31T13:59:00.000Z',
+        },
       },
       orderBy: { name: 'asc' },
     });

@@ -10,6 +10,9 @@ export async function GET() {
       where: {
         type: 'room',
         owner: 'admin@foo.com', // Only show available rooms
+        NOT: {
+          deadline: '1999-12-31T13:59:00.000Z',
+        },
       },
       orderBy: { name: 'asc' },
     });

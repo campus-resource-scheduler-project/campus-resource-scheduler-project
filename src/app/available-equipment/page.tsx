@@ -10,6 +10,7 @@ import FilterSidebarEquipment from '@/components/FilterSidebarEquipment';
 import { useSession } from 'next-auth/react';
 
 type EquipmentItem = {
+  deadline: string;
   id: number;
   name: string;
   type: string;
@@ -31,6 +32,10 @@ export default function AvailableEquipmentPage() {
       try {
         const updated = await fetch('/api/equipment');
         const data = await updated.json();
+
+        // log raw and filtered data
+        console.log('Raw equipment data from API:', data);
+
         const available = data.filter(
           (item: EquipmentItem) => item.owner?.toLowerCase?.() === 'admin@foo.com',
         );
@@ -71,7 +76,8 @@ export default function AvailableEquipmentPage() {
 
         // Filter again to only include available (owned by admin)
         const refreshedAvailable = updatedData.filter(
-          (item: EquipmentItem) => item.owner?.toLowerCase?.() === 'admin@foo.com',
+          (item: EquipmentItem) => item.owner?.toLowerCase?.() === 'admin@foo.com'
+          && item.deadline !== '1999-12-31T13:59:00.000Z',
         );
 
         setEquipment(refreshedAvailable);
