@@ -29,7 +29,17 @@ export default function EditResourceForm({ resource }: { resource: any }) {
           <Card>
             <Card.Body>
               <Form onSubmit={handleSubmit(onSubmit)}>
-                {['name', 'category', 'type', 'location', 'campus', 'posted', 'deadline', 'image'].map((field) => (
+                {[
+                  'name',
+                  'owner',
+                  'type',
+                  'category',
+                  'campus',
+                  'location',
+                  'posted',
+                  'deadline',
+                  'image',
+                ].map((field) => (
                   <Form.Group key={field} className="mb-3">
                     <Form.Label>{field}</Form.Label>
                     <input
@@ -40,7 +50,6 @@ export default function EditResourceForm({ resource }: { resource: any }) {
                     <div className="invalid-feedback">{String(errors[field]?.message)}</div>
                   </Form.Group>
                 ))}
-                <input type="hidden" {...register('owner')} />
                 <Button type="submit" className="mt-3">Update</Button>
               </Form>
             </Card.Body>
