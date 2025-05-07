@@ -213,6 +213,7 @@ export async function returnResource(id: number) {
       where: { id },
       data: {
         owner: 'admin@foo.com',
+        deadline: '1999-12-31T13:59:00.000Z', // Set a past date to indicate it's available
       },
     });
     return { success: true, resource: updatedResource };

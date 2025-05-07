@@ -22,7 +22,10 @@ export default async function ResourcesPage() {
   try {
     resources = await prisma.resource.findMany({
       where: {
-        ...(userEmail ? { owner: userEmail } : {}),
+        owner: userEmail ?? '',
+        NOT: {
+          deadline: '1999-12-31T13:59:00.000Z', // fake deadline = returned
+        },
       },
     });
   } catch (error) {

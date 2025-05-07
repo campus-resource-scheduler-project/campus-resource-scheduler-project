@@ -8,7 +8,7 @@ export async function GET() {
   try {
     const rooms = await prisma.resource.findMany({
       where: {
-        category: 'room',
+        type: 'room',
         owner: 'admin@foo.com', // Only show available rooms
       },
       orderBy: { name: 'asc' },
