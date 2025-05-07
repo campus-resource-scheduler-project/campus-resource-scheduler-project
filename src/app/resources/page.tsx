@@ -20,14 +20,17 @@ export default async function ResourcesPage() {
   let resources: Resource[] = [];
 
   try {
-    resources = await prisma.resource.findMany({
+    resources = (await prisma.resource.findMany({
       where: {
         owner: userEmail ?? '',
         NOT: {
           deadline: '1999-12-31T13:59:00.000Z', // fake deadline = returned
         },
       },
-    });
+    })).map(resource => ({
+      ...resource,
+      deadline: resource.deadline ?? null, // Convert undefined to null
+    }));
   } catch (error) {
     console.error('Error fetching resources:', error);
   } finally {

@@ -213,7 +213,7 @@ export async function returnResource(id: number) {
       where: { id },
       data: {
         owner: 'admin@foo.com',
-        deadline: generateDeadline(), // Sets a future date
+        deadline: null, // Sets a future date
       },
     });
     return { success: true, resource: updatedResource };

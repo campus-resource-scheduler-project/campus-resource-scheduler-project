@@ -28,7 +28,7 @@ interface Resource {
   campus: string;
   image: string;
   posted?: string;
-  deadline?: string;
+  deadline?: string | null;
 }
 
 interface YourResourcesProps {

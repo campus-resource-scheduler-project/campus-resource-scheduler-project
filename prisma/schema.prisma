@@ -63,5 +63,5 @@ model Resource {
   campus    String  @default("")
   image     String  @default("")
   posted    String  @default("")
-  deadline  String  @default("")
+  deadline  String?  @default("")
 }
